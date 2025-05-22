@@ -21,7 +21,7 @@ import com.marpe.cht.services.CoordenadorService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/coordenadores")
+@RequestMapping(value = "/coordenadores")
 public class CoordenadorController {
 
 	@Autowired

@@ -21,7 +21,7 @@ import com.marpe.cht.services.ColaboradorService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/colaboradores")
+@RequestMapping(value = "/colaboradores")
 public class ColaboradorController {
 
 	@Autowired

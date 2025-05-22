@@ -19,7 +19,7 @@ import com.marpe.cht.entities.Cidade;
 import com.marpe.cht.services.CidadeService;
 
 @RestController
-@RequestMapping(value = "/api/cidades")
+@RequestMapping(value = "/cidades")
 public class CidadeController {
 
 	@Autowired

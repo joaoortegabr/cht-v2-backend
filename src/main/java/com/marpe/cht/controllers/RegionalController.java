@@ -21,7 +21,7 @@ import com.marpe.cht.services.RegionalService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/regionais")
+@RequestMapping(value = "/regionais")
 public class RegionalController {
 
 	@Autowired

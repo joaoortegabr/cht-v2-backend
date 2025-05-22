@@ -21,7 +21,7 @@ import com.marpe.cht.services.OSColabService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/oscolab")
+@RequestMapping(value = "/oscolab")
 public class OSColabController {
 
 	@Autowired

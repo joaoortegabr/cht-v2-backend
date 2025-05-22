@@ -27,7 +27,7 @@ import com.marpe.cht.services.UserService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/users")
+@RequestMapping(value = "/users")
 public class UserController {
 
 	@Autowired

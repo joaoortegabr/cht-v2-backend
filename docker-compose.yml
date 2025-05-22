@@ -1,0 +1,29 @@
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:8.3
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=marpeinventarios_cht
+      - MYSQL_USER=marpeinventarios_chtUserTer
+      - MYSQL_PASSWORD=Tp@ssw0rdCHT
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command:
+      --default-authentication-plugin=mysql_native_password
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+
+  adminer:
+    container_name: adminer
+    image: adminer:latest
+    ports:
+      - "8081:8080"
+    depends_on:
+      - mysql
+
+volumes:
+  mysql_data:
+

@@ -21,7 +21,7 @@ import com.marpe.cht.services.ClienteService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/clientes")
+@RequestMapping(value = "/clientes")
 public class ClienteController {
 
 	@Autowired

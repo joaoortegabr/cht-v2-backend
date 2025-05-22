@@ -20,7 +20,7 @@ import com.marpe.cht.services.export.ExcelService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/report")
+@RequestMapping(value = "/report")
 public class ReportController {
 
 	DateTimeFormatter dtfmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");

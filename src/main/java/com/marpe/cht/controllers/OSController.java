@@ -21,7 +21,7 @@ import com.marpe.cht.services.OSService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/os")
+@RequestMapping(value = "/os")
 public class OSController {
 
 	@Autowired
