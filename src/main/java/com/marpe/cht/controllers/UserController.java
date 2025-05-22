@@ -50,54 +50,54 @@ public class UserController {
 		return ResponseEntity.ok().body(obj);
 	}
 	
-	@PostMapping
-	public ResponseEntity<User> insert(@RequestBody User obj) throws ExistingUserException {
-		try {
-			obj = service.insert(obj);
-			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-					.buildAndExpand(obj.getId()).toUri();
-			return ResponseEntity.created(uri).body(obj);
-		} catch (ExistingUserException e) {
-			throw new ExistingUserException(e.getMessage());
-		}
-	}
-	
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		service.delete(id);
-		return ResponseEntity.noContent().build();
-	}
-	
-	@PutMapping(value = "/{id}")
-	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj) throws ExistingUserException {
-		try {
-			obj = service.update(id, obj);
-			return ResponseEntity.ok().body(obj);
-		} catch (ExistingUserException e) {
-			throw new ExistingUserException(e.getMessage());
-		}
-	}	
-	
-	@SuppressWarnings("unchecked")
-	@PostMapping(value = "/login")
-	public ResponseEntity<Optional<User>> validateUser(@RequestBody ObjectNode JSONObject) {
-		String username = JSONObject.get("username").asText();
-        String password = JSONObject.get("password").asText();
-  
-		Optional<User> optUser = Optional.of(repository.findByEmail(username));
-//		if(optUser.isEmpty() || optUser.equals(null)) {
-		if(optUser.isEmpty()) {
-			  return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-		}
-		  
-		boolean valid = encoder.matches(password, optUser.get().getPassword());
-		if(valid) {
-			HttpStatus status = HttpStatus.OK;
-			return ResponseEntity.status(status).body(optUser);
-		} else {
-			return (ResponseEntity<Optional<User>>) ResponseEntity.status(HttpStatus.UNAUTHORIZED);
-		}
-		
-	}
+//	@PostMapping
+//	public ResponseEntity<User> insert(@RequestBody User obj) throws ExistingUserException {
+//		try {
+//			obj = service.insert(obj);
+//			URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+//					.buildAndExpand(obj.getId()).toUri();
+//			return ResponseEntity.created(uri).body(obj);
+//		} catch (ExistingUserException e) {
+//			throw new ExistingUserException(e.getMessage());
+//		}
+//	}
+//	
+//	@DeleteMapping(value = "/{id}")
+//	public ResponseEntity<Void> delete(@PathVariable Long id) {
+//		service.delete(id);
+//		return ResponseEntity.noContent().build();
+//	}
+//	
+//	@PutMapping(value = "/{id}")
+//	public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User obj) throws ExistingUserException {
+//		try {
+//			obj = service.update(id, obj);
+//			return ResponseEntity.ok().body(obj);
+//		} catch (ExistingUserException e) {
+//			throw new ExistingUserException(e.getMessage());
+//		}
+//	}	
+//	
+//	@SuppressWarnings("unchecked")
+//	@PostMapping(value = "/login")
+//	public ResponseEntity<Optional<User>> validateUser(@RequestBody ObjectNode JSONObject) {
+//		String username = JSONObject.get("username").asText();
+//        String password = JSONObject.get("password").asText();
+//  
+//		Optional<User> optUser = Optional.of(repository.findByEmail(username));
+////		if(optUser.isEmpty() || optUser.equals(null)) {
+//		if(optUser.isEmpty()) {
+//			  return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+//		}
+//		  
+//		boolean valid = encoder.matches(password, optUser.get().getPassword());
+//		if(valid) {
+//			HttpStatus status = HttpStatus.OK;
+//			return ResponseEntity.status(status).body(optUser);
+//		} else {
+//			return (ResponseEntity<Optional<User>>) ResponseEntity.status(HttpStatus.UNAUTHORIZED);
+//		}
+//		
+//	}
 	 
 }

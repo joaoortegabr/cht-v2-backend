@@ -9,7 +9,7 @@ import org.hibernate.annotations.SQLRestriction;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.marpe.cht.entities.enums.DataState;
+import com.marpe.cht.entities.enums.Datastate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -55,7 +55,7 @@ public class OSColab implements Serializable {
 	private OS os;
 	
     @Enumerated(EnumType.ORDINAL)
-    private DataState state;
+    private Datastate state;
 	
 	public OSColab() {
 	}
@@ -72,7 +72,7 @@ public class OSColab implements Serializable {
 		this.pago = false;
 		this.colaborador = colaborador;
 		this.os = os;
-		this.state = DataState.ACTIVE;
+		this.state = Datastate.ACTIVE;
 	}
 
 	public Long getId() {
@@ -163,11 +163,11 @@ public class OSColab implements Serializable {
 		this.os = os;
 	}
 
-	public DataState getState() {
+	public Datastate getState() {
 		return state;
 	}
 
-	public void setState(DataState state) {
+	public void setState(Datastate state) {
 		this.state = state;
 	}
 	

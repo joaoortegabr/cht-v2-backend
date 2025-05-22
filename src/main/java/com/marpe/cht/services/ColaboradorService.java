@@ -11,7 +11,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.marpe.cht.entities.Cidade;
 import com.marpe.cht.entities.Colaborador;
 import com.marpe.cht.entities.OSColab;
 import com.marpe.cht.entities.User;
@@ -51,18 +50,18 @@ public class ColaboradorService {
 		return repository.save(obj);
 	}
 	
-	public void delete(Long id) {
-		try {
-			Colaborador colaborador = findById(id);
-			substituiColaboradorNulo(colaborador);
-			repository.deleteById(id);
-		} catch(EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException("Resource not found with id: " + id);
-		} catch(DataIntegrityViolationException e) {
-			throw new DatabaseException(e.getMessage());
-		}
-	}
-	
+//	public void delete(Long id) {
+//		try {
+//			Colaborador colaborador = findById(id);
+//			substituiColaboradorNulo(colaborador);
+//			repository.deleteById(id);
+//		} catch(EmptyResultDataAccessException e) {
+//			throw new ResourceNotFoundException("Resource not found with id: " + id);
+//		} catch(DataIntegrityViolationException e) {
+//			throw new DatabaseException(e.getMessage());
+//		}
+//	}
+//	
 	public Colaborador update(Long id, Colaborador obj) {
 		try {
 			Colaborador entity = repository.getReferenceById(id);
@@ -74,40 +73,40 @@ public class ColaboradorService {
 	}
 
 	private void updateData(Colaborador entity, Colaborador obj) {
-		entity.setUser(obj.getUser());
-		entity.setBanco(obj.getBanco());
-		entity.setAgencia(obj.getAgencia());
-		entity.setConta(obj.getConta());
-		entity.setOperacao(obj.getOperacao());
-		entity.setTitular(obj.getTitular());
-		entity.setCidade(obj.getCidade());
+//		entity.setUser(obj.getUser());
+//		entity.setBanco(obj.getBanco());
+//		entity.setAgencia(obj.getAgencia());
+//		entity.setConta(obj.getConta());
+//		entity.setOperacao(obj.getOperacao());
+//		entity.setTitular(obj.getTitular());
+//		entity.setCidade(obj.getCidade());
 	}
 	
-	private void substituiColaboradorNulo(Colaborador colaborador) {
-		List<OSColab> colabs = oscolabService.findAll();
-		colabs.stream()
-			.forEach(x -> {
-				if(x.getColaborador().equals(colaborador)) {
-					x.setColaborador(criaColaboradorNulo());
-
-				}
-			}
-		);
-		
-	}
+//	private void substituiColaboradorNulo(Colaborador colaborador) {
+//		List<OSColab> colabs = oscolabService.findAll();
+//		colabs.stream()
+//			.forEach(x -> {
+//				if(x.getColaborador().equals(colaborador)) {
+//					x.setColaborador(criaColaboradorNulo());
+//
+//				}
+//			}
+//		);
+//		
+//	}
 	
-	public Colaborador criaColaboradorNulo() {
-		User user = userService.criaUserNulo();
-		Colaborador colaborador = new Colaborador();
-		colaborador.setUser(user);
-		colaborador.setBanco("nulo");
-		colaborador.setAgencia("nulo");
-		colaborador.setConta("nulo");
-		colaborador.setOperacao("nulo");
-		colaborador.setTitular("nulo");
-		colaborador.setCidade(new Cidade());
-		return colaborador;
-	}
+//	public Colaborador criaColaboradorNulo() {
+//		User user = userService.criaUserNulo();
+//		Colaborador colaborador = new Colaborador();
+//		colaborador.setUser(user);
+//		colaborador.setBanco("nulo");
+//		colaborador.setAgencia("nulo");
+//		colaborador.setConta("nulo");
+//		colaborador.setOperacao("nulo");
+//		colaborador.setTitular("nulo");
+//		colaborador.setCidade(new Cidade());
+//		return colaborador;
+//	}
 	
 
 	

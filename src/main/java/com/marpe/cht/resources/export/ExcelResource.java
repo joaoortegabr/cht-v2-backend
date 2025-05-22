@@ -26,73 +26,73 @@ public class ExcelResource {
 	  @Autowired
 	  ExcelService excelFileService;
 	
-	  @GetMapping(value="/coordenadores")
-	  public ResponseEntity<Resource> exportCoordenadores() {
-	    String filename = "coordenadores.xlsx";
-	    InputStreamResource file = new InputStreamResource(excelFileService.listCoordenadores());
-	
-	    return ResponseEntity.ok()
-	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
-	        .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
-	        .body(file);
-	  }
-	  
-	  @GetMapping(value="/colaboradores")
-	  public ResponseEntity<Resource> exportColaboradores() {
-	    String filename = "colaboradores.xlsx";
-	    InputStreamResource file = new InputStreamResource(excelFileService.listColaboradores());
-	
-	    return ResponseEntity.ok()
-	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
-	        .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
-	        .body(file);
-	  }
-	  
-	  @GetMapping(value="/os")
-	  public ResponseEntity<Resource> exportOS() {
-	    String filename = "os.xlsx";
-	    InputStreamResource file = new InputStreamResource(excelFileService.listOS());
-	
-	    return ResponseEntity.ok()
-	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
-	        .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
-	        .body(file);
-	  }
-	  
-	  @GetMapping(value="/oscolab")
-	  public ResponseEntity<Resource> exportOSColab() {
-	    String filename = "oscolab.xlsx";
-	    InputStreamResource file = new InputStreamResource(excelFileService.listOSColab());
-	
-	    return ResponseEntity.ok()
-	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
-	        .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
-	        .body(file);
-	  }
-	  
-	  @GetMapping(value="/oscolabPorPeriodo")
-	  public ResponseEntity<Resource> exportOSColabPorPeriodo(@RequestParam String startDate, @RequestParam String endDate, @RequestParam Boolean todosPagos) {
-	    
-		String filename = "oscolabPorPeriodo.xlsx";
-	    InputStreamResource file = new InputStreamResource(excelFileService.OSColabPorPeriodo(startDate, endDate, todosPagos));
-	
-	    return ResponseEntity.ok()
-	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
-	        .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
-	        .body(file);
-	  }
-
-	  @GetMapping(value="/oscolabSomadoPorPeriodo")
-	  public ResponseEntity<Resource> exportOSColabSomadoPorPeriodo(@RequestParam String startDate, @RequestParam String endDate, @RequestParam Boolean todosPagos) {
-	    
-		String filename = "oscolabSomadoPorPeriodo.xlsx";
-	    InputStreamResource file = new InputStreamResource(excelFileService.OSColabSomadoPorPeriodo(startDate, endDate, todosPagos));
-	
-	    return ResponseEntity.ok()
-	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
-	        .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
-	        .body(file);
-	  }
+//	  @GetMapping(value="/coordenadores")
+//	  public ResponseEntity<Resource> exportCoordenadores() {
+//	    String filename = "coordenadores.xlsx";
+//	    InputStreamResource file = new InputStreamResource(excelFileService.listCoordenadores());
+//	
+//	    return ResponseEntity.ok()
+//	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+//	        .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+//	        .body(file);
+//	  }
+//	  
+//	  @GetMapping(value="/colaboradores")
+//	  public ResponseEntity<Resource> exportColaboradores() {
+//	    String filename = "colaboradores.xlsx";
+//	    InputStreamResource file = new InputStreamResource(excelFileService.listColaboradores());
+//	
+//	    return ResponseEntity.ok()
+//	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+//	        .contentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"))
+//	        .body(file);
+//	  }
+//	  
+//	  @GetMapping(value="/os")
+//	  public ResponseEntity<Resource> exportOS() {
+//	    String filename = "os.xlsx";
+//	    InputStreamResource file = new InputStreamResource(excelFileService.listOS());
+//	
+//	    return ResponseEntity.ok()
+//	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+//	        .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+//	        .body(file);
+//	  }
+//	  
+//	  @GetMapping(value="/oscolab")
+//	  public ResponseEntity<Resource> exportOSColab() {
+//	    String filename = "oscolab.xlsx";
+//	    InputStreamResource file = new InputStreamResource(excelFileService.listOSColab());
+//	
+//	    return ResponseEntity.ok()
+//	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+//	        .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+//	        .body(file);
+//	  }
+//	  
+//	  @GetMapping(value="/oscolabPorPeriodo")
+//	  public ResponseEntity<Resource> exportOSColabPorPeriodo(@RequestParam String startDate, @RequestParam String endDate, @RequestParam Boolean todosPagos) {
+//	    
+//		String filename = "oscolabPorPeriodo.xlsx";
+//	    InputStreamResource file = new InputStreamResource(excelFileService.OSColabPorPeriodo(startDate, endDate, todosPagos));
+//	
+//	    return ResponseEntity.ok()
+//	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+//	        .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+//	        .body(file);
+//	  }
+//
+//	  @GetMapping(value="/oscolabSomadoPorPeriodo")
+//	  public ResponseEntity<Resource> exportOSColabSomadoPorPeriodo(@RequestParam String startDate, @RequestParam String endDate, @RequestParam Boolean todosPagos) {
+//	    
+//		String filename = "oscolabSomadoPorPeriodo.xlsx";
+//	    InputStreamResource file = new InputStreamResource(excelFileService.OSColabSomadoPorPeriodo(startDate, endDate, todosPagos));
+//	
+//	    return ResponseEntity.ok()
+//	        .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filename)
+//	        .contentType(MediaType.parseMediaType("application/vnd.ms-excel"))
+//	        .body(file);
+//	  }
   
 
 }

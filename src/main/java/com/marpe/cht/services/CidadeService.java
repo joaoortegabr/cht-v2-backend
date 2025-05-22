@@ -1,62 +1,59 @@
 package com.marpe.cht.services;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import javax.persistence.EntityNotFoundException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import com.marpe.cht.entities.Cidade;
-import com.marpe.cht.exceptions.DatabaseException;
-import com.marpe.cht.repositories.CidadeRepository;
-import com.marpe.cht.exceptions.ResourceNotFoundException;
+import com.marpe.cht.entities.dtos.CidadeIBGEResponse;
+import com.marpe.cht.entities.dtos.CidadeIBGEResponse.Mesorregiao;
+import com.marpe.cht.entities.dtos.CidadeIBGEResponse.Microrregiao;
+import com.marpe.cht.entities.dtos.CidadeIBGEResponse.UF;
+import com.marpe.cht.entities.dtos.CidadeResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 
 @Service
 public class CidadeService {
 
-	@Autowired
-	private CidadeRepository repository;
-	
-	public List<Cidade> findAll() {
-		return repository.findAll();
-	}
-	
-	public Cidade findById(Long id) {
-		Optional<Cidade> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ResourceNotFoundException("Resource not found with id: " + id));
-	}
-	
-	public Cidade insert(Cidade obj) {
-		return repository.save(obj);
-	}
-	
-	public void delete(Long id) {
-		try {
-			repository.deleteById(id);	
-		} catch(EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException("Resource not found with id: " + id);
-		} catch(DataIntegrityViolationException e) {
-			throw new DatabaseException(e.getMessage());
-		}
-	}
-	
-	public Cidade update(Long id, Cidade obj) {
-		try {
-			Cidade entity = repository.getReferenceById(id);
-			updateData(entity, obj);
-			return repository.save(entity);
-		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException("Resource not found with id: " + id);
-		}
-	}
+	private static final Logger log = LoggerFactory.getLogger(CidadeService.class);
+    private final String URL_IBGE = "https://servicodados.ibge.gov.br/api/v1/localidades/municipios";
+    
+    private final RestTemplate restTemplate;
 
-	private void updateData(Cidade entity, Cidade obj) {
-		entity.setNome(obj.getNome());
-	}
-	
-	
+    public CidadeService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
+    @Cacheable("cidades")
+    public List<CidadeResponse> getAllCidades() {
+    	log.info("Receiving cities list from IBGE site.");
+        ResponseEntity<CidadeIBGEResponse[]> response = restTemplate.getForEntity(
+            URL_IBGE,
+            CidadeIBGEResponse[].class
+        );
+
+        return Arrays.stream(response.getBody())
+                .map(cidade -> new CidadeResponse(
+                        cidade.getNome(),
+                        extractSigla(cidade)
+                ))
+                .collect(Collectors.toList());
+    }
+
+    private String extractSigla(CidadeIBGEResponse cidade) {
+        return Optional.ofNullable(cidade.getMicrorregiao())
+            .map(Microrregiao::getMesorregiao)
+            .map(Mesorregiao::getUf)
+            .map(UF::getSigla)
+            .orElse(null);
+    }
+    
+    
 }

@@ -31,23 +31,23 @@ public class ReportController {
 	@Autowired
 	private ExcelService excelService;
 	
-	@GetMapping(value="/oscolabPorPeriodo")
-	public ResponseEntity<List<OSColab>> OSColabPorPeriodo(@RequestParam String startDate, @RequestParam String endDate, @RequestParam Boolean todosPagos) {
-		List<OSColab> obj = reportService.OSColabPorPeriodo(startDate, endDate, todosPagos);
-		return ResponseEntity.ok().body(obj);
-	}
-	
-	@GetMapping(value="/oscolabSomadoPorPeriodo")
-	public ResponseEntity<ByteArrayInputStream> OSColabSomadoPorPeriodo(@RequestParam String startDate, @RequestParam String endDate, @RequestParam Boolean todosPagos) {
-		ByteArrayInputStream obj = excelService.OSColabSomadoPorPeriodo(startDate, endDate, todosPagos);
-		return ResponseEntity.ok().body(obj);
-	}
-	
-	@GetMapping(value="/topFiveOscolabSomadoPorPeriodo")
-	public ResponseEntity<List<Object[]>> OSColabPorPeriodoEStatus(@RequestParam String startDate, @RequestParam String endDate) {
-		List<Object[]> obj = reportService.topFiveOscolabSomadoPorPeriodo(startDate, endDate);
-		return ResponseEntity.ok().body(obj);
-	}
+//	@GetMapping(value="/oscolabPorPeriodo")
+//	public ResponseEntity<List<OSColab>> OSColabPorPeriodo(@RequestParam String startDate, @RequestParam String endDate, @RequestParam Boolean todosPagos) {
+//		List<OSColab> obj = reportService.OSColabPorPeriodo(startDate, endDate, todosPagos);
+//		return ResponseEntity.ok().body(obj);
+//	}
+//	
+//	@GetMapping(value="/oscolabSomadoPorPeriodo")
+//	public ResponseEntity<ByteArrayInputStream> OSColabSomadoPorPeriodo(@RequestParam String startDate, @RequestParam String endDate, @RequestParam Boolean todosPagos) {
+//		ByteArrayInputStream obj = excelService.OSColabSomadoPorPeriodo(startDate, endDate, todosPagos);
+//		return ResponseEntity.ok().body(obj);
+//	}
+//	
+//	@GetMapping(value="/topFiveOscolabSomadoPorPeriodo")
+//	public ResponseEntity<List<Object[]>> OSColabPorPeriodoEStatus(@RequestParam String startDate, @RequestParam String endDate) {
+//		List<Object[]> obj = reportService.topFiveOscolabSomadoPorPeriodo(startDate, endDate);
+//		return ResponseEntity.ok().body(obj);
+//	}
 	
 	@GetMapping(value = "/os/desc5")
 	public ResponseEntity<List<OS>> findAllOSDescOrder5() {

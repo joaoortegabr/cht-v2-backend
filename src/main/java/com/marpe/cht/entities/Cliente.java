@@ -1,15 +1,13 @@
 package com.marpe.cht.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.marpe.cht.entities.enums.DataState;
+import com.marpe.cht.entities.enums.Datastate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,8 +24,8 @@ import jakarta.persistence.Table;
 @SQLDelete(sql = "UPDATE tb_cliente SET state = '0' WHERE id = ?")
 @SQLRestriction(value = "state = '1'")
 public class Cliente implements Serializable {
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = 3860635340174545351L;
+	
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,12 +33,11 @@ public class Cliente implements Serializable {
 	private String nome;
 	private String cidade;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy = "cliente")
-	private List<OS> orders = new ArrayList<>();
+	private List<OS> orders;
 	
     @Enumerated(EnumType.ORDINAL)
-    private DataState state;
+    private Datastate state;
 	
 	public Cliente() {
 	}
@@ -48,7 +45,6 @@ public class Cliente implements Serializable {
 	public Cliente(String nome, String cidade) {
 		this.nome = nome;
 		this.cidade = cidade;
-		this.state = DataState.ACTIVE;
 	}
 
 	public Long getId() {
@@ -79,11 +75,11 @@ public class Cliente implements Serializable {
 		return orders;
 	}
 	
-	public DataState getState() {
+	public Datastate getState() {
 		return state;
 	}
 
-	public void setState(DataState state) {
+	public void setState(Datastate state) {
 		this.state = state;
 	}
 

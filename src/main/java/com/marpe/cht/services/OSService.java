@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.marpe.cht.entities.OS;
 import com.marpe.cht.entities.OSColab;
-import com.marpe.cht.entities.enums.DataState;
+import com.marpe.cht.entities.enums.Datastate;
 import com.marpe.cht.exceptions.DatabaseException;
 import com.marpe.cht.repositories.OSColabRepository;
 import com.marpe.cht.repositories.OSRepository;
@@ -62,10 +62,10 @@ public class OSService {
 	public void softDelete(Long id) {
 		try {
 			OS os = repository.getReferenceById(id);
-			os.setState(DataState.DELETED);
+			os.setState(Datastate.DELETED);
 
 			for(OSColab oscolab : os.getOscolab()) {
-				oscolab.setState(DataState.DELETED);
+				oscolab.setState(Datastate.DELETED);
 				oscolabRepository.save(oscolab);
 			}
 			repository.save(os);

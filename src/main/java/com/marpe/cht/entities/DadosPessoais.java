@@ -2,13 +2,13 @@ package com.marpe.cht.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.Set;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 import com.marpe.cht.entities.enums.Datastate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -16,17 +16,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_colaborador")
-@SQLDelete(sql = "UPDATE tb_colaborador SET state = '0' WHERE id = ?")
+@Table(name = "tb_dados_pessoais")
+@SQLDelete(sql = "UPDATE tb_dados_pessoais SET state = '0' WHERE id = ?")
 @SQLRestriction(value = "state = '1'")
-public class Colaborador implements Serializable {
-	private static final long serialVersionUID = 6567600968895498948L;
+public class DadosPessoais implements Serializable {
+	private static final long serialVersionUID = -2701444454813504619L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,28 +33,26 @@ public class Colaborador implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	@OneToOne
-	@JoinColumn(name = "dados_pessoais")
-	private DadosPessoais dadosPessoais;
-	@OneToOne
-	@JoinColumn(name = "dados_bancarios")
-	private DadosBancarios dadosBancarios;
-	private String cidade;
 	
-	@OneToMany(mappedBy = "colaborador")
-	private Set<OSColab> ordersByColab;
-	
+	private String rg;
+	@Column(unique = true)
+	private String cpf;
+	private String telefone;
+	@Column(unique = true)
+	private String email;
+
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
 	
-	public Colaborador() {
+	public DadosPessoais() {
 	}
 
-	public Colaborador(User user, DadosPessoais dadosPessoais, DadosBancarios dadosBancarios, String cidade) {
+	public DadosPessoais(User user, String rg, String cpf, String telefone, String email) {
 		this.user = user;
-		this.dadosPessoais = dadosPessoais;
-		this.dadosBancarios = dadosBancarios;
-		this.cidade = cidade;
+		this.rg = rg;
+		this.cpf = cpf;
+		this.telefone = telefone;
+		this.email = email;
 	}
 
 	public Long getId() {
@@ -75,28 +71,36 @@ public class Colaborador implements Serializable {
 		this.user = user;
 	}
 
-	public DadosPessoais getDadosPessoais() {
-		return dadosPessoais;
+	public String getRg() {
+		return rg;
 	}
 
-	public void setDadosPessoais(DadosPessoais dadosPessoais) {
-		this.dadosPessoais = dadosPessoais;
+	public void setRg(String rg) {
+		this.rg = rg;
 	}
 
-	public DadosBancarios getDadosBancarios() {
-		return dadosBancarios;
+	public String getCpf() {
+		return cpf;
 	}
 
-	public void setDadosBancarios(DadosBancarios dadosBancarios) {
-		this.dadosBancarios = dadosBancarios;
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 
-	public String getCidade() {
-		return cidade;
+	public String getTelefone() {
+		return telefone;
 	}
 
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public Datastate getState() {
@@ -105,10 +109,6 @@ public class Colaborador implements Serializable {
 
 	public void setState(Datastate state) {
 		this.state = state;
-	}
-
-	public Set<OSColab> getOrdersByColab() {
-		return ordersByColab;
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public class Colaborador implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Colaborador other = (Colaborador) obj;
+		DadosPessoais other = (DadosPessoais) obj;
 		return Objects.equals(id, other.id);
 	}
 

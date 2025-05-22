@@ -9,7 +9,7 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.marpe.cht.entities.enums.DataState;
+import com.marpe.cht.entities.enums.Datastate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -42,7 +42,7 @@ public class Regional implements Serializable {
 	private List<OS> orders = new ArrayList<>();
 	
     @Enumerated(EnumType.ORDINAL)
-    private DataState state;
+    private Datastate state;
 	
 	public Regional() {
 	}
@@ -55,7 +55,7 @@ public class Regional implements Serializable {
 		this.valorHoraNoturna = valorHoraNoturna;
 		this.valorTransporte = valorTransporte;
 		this.descricao = descricao;
-		this.state = DataState.ACTIVE;
+		this.state = Datastate.ACTIVE;
 	}
 
 	public Long getId() {
@@ -118,11 +118,11 @@ public class Regional implements Serializable {
 		return orders;
 	}
 	
-	public DataState getState() {
+	public Datastate getState() {
 		return state;
 	}
 
-	public void setState(DataState state) {
+	public void setState(Datastate state) {
 		this.state = state;
 	}
 

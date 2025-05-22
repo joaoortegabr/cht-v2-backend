@@ -6,19 +6,15 @@ import java.util.Objects;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.marpe.cht.entities.enums.DataState;
-import com.marpe.cht.entities.enums.Perfil;
+import com.marpe.cht.entities.enums.Datastate;
+import com.marpe.cht.entities.enums.Role;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,50 +22,27 @@ import jakarta.persistence.Table;
 @SQLDelete(sql = "UPDATE tb_user SET state = '0' WHERE id = ?")
 @SQLRestriction(value = "state = '1'")
 public class User implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -4736665210289429436L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	protected Long id;
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private Long id;
+	private String username;
 	private String password;
-	private String nome;
-	private String rg;
-	@Column(unique = true)
-	private String cpf;
-	private String telefone;
-	@Column(unique = true)
-	private String email;
-	private Boolean ativo;
 	
     @Enumerated(EnumType.ORDINAL)
-	private Perfil perfil;
-	
-	@JsonIgnore
-	@OneToOne(mappedBy = "user")
-	private Coordenador coordenador;
-	
-	@JsonIgnore
-	@OneToOne(mappedBy = "user")
-	private Colaborador colaborador;
+	private Role role;
 	
     @Enumerated(EnumType.ORDINAL)
-    private DataState state;
+    private Datastate state;
 	
 	public User() {
 	}
 
-	public User(String password, String nome, String rg, String cpf, String telefone, String email, 
-			Perfil perfil) {
+	public User(String username, String password, Role role) {
+		this.username = username;
 		this.password = password;
-		this.nome = nome;
-		this.rg = rg;
-		this.cpf = cpf;
-		this.telefone = telefone;
-		this.email = email;
-		this.ativo = true;
-		this.perfil = perfil;
-		this.state = DataState.ACTIVE;
+		this.role = role;
 	}
 
 	public Long getId() {
@@ -80,6 +53,14 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public String getPassword() {
 		return password;
 	}
@@ -88,74 +69,25 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public String getNome() {
-		return nome;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
-	public String getRg() {
-		return rg;
-	}
-
-	public void setRg(String rg) {
-		this.rg = rg;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	
-	public Boolean getAtivo() {
-		return ativo;
-	}
-
-	public void setAtivo(Boolean ativo) {
-		this.ativo = ativo;
-	}
-
-	public Perfil getPerfil() {
-		return perfil;
-	}
-
-	public void setPerfil(Perfil perfil) {
-		this.perfil = perfil;
-	}
-		
-	public DataState getState() {
+	public Datastate getState() {
 		return state;
 	}
 
-	public void setState(DataState state) {
+	public void setState(Datastate state) {
 		this.state = state;
 	}
 
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(email);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -167,8 +99,7 @@ public class User implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(email, other.email);
+		return Objects.equals(id, other.id);
 	}
-
 
 }

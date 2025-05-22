@@ -2,7 +2,6 @@ package com.marpe.cht.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.Set;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
@@ -16,17 +15,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_colaborador")
-@SQLDelete(sql = "UPDATE tb_colaborador SET state = '0' WHERE id = ?")
+@Table(name = "tb_dados_bancarios")
+@SQLDelete(sql = "UPDATE tb_dados_bancarios SET state = '0' WHERE id = ?")
 @SQLRestriction(value = "state = '1'")
-public class Colaborador implements Serializable {
-	private static final long serialVersionUID = 6567600968895498948L;
+public class DadosBancarios implements Serializable {
+	private static final long serialVersionUID = -4752466686437172291L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,28 +32,26 @@ public class Colaborador implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	@OneToOne
-	@JoinColumn(name = "dados_pessoais")
-	private DadosPessoais dadosPessoais;
-	@OneToOne
-	@JoinColumn(name = "dados_bancarios")
-	private DadosBancarios dadosBancarios;
-	private String cidade;
 	
-	@OneToMany(mappedBy = "colaborador")
-	private Set<OSColab> ordersByColab;
-	
+	private String banco;
+	private String agencia;
+	private String conta;
+	private String operacao;
+	private String titular;
+
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
 	
-	public Colaborador() {
+	public DadosBancarios() {
 	}
 
-	public Colaborador(User user, DadosPessoais dadosPessoais, DadosBancarios dadosBancarios, String cidade) {
+	public DadosBancarios(User user, String banco, String agencia, String conta, String operacao, String titular) {
 		this.user = user;
-		this.dadosPessoais = dadosPessoais;
-		this.dadosBancarios = dadosBancarios;
-		this.cidade = cidade;
+		this.banco = banco;
+		this.agencia = agencia;
+		this.conta = conta;
+		this.operacao = operacao;
+		this.titular = titular;
 	}
 
 	public Long getId() {
@@ -75,28 +70,44 @@ public class Colaborador implements Serializable {
 		this.user = user;
 	}
 
-	public DadosPessoais getDadosPessoais() {
-		return dadosPessoais;
+	public String getBanco() {
+		return banco;
 	}
 
-	public void setDadosPessoais(DadosPessoais dadosPessoais) {
-		this.dadosPessoais = dadosPessoais;
+	public void setBanco(String banco) {
+		this.banco = banco;
 	}
 
-	public DadosBancarios getDadosBancarios() {
-		return dadosBancarios;
+	public String getAgencia() {
+		return agencia;
 	}
 
-	public void setDadosBancarios(DadosBancarios dadosBancarios) {
-		this.dadosBancarios = dadosBancarios;
+	public void setAgencia(String agencia) {
+		this.agencia = agencia;
 	}
 
-	public String getCidade() {
-		return cidade;
+	public String getConta() {
+		return conta;
 	}
 
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
+	public void setConta(String conta) {
+		this.conta = conta;
+	}
+
+	public String getOperacao() {
+		return operacao;
+	}
+
+	public void setOperacao(String operacao) {
+		this.operacao = operacao;
+	}
+
+	public String getTitular() {
+		return titular;
+	}
+
+	public void setTitular(String titular) {
+		this.titular = titular;
 	}
 
 	public Datastate getState() {
@@ -105,10 +116,6 @@ public class Colaborador implements Serializable {
 
 	public void setState(Datastate state) {
 		this.state = state;
-	}
-
-	public Set<OSColab> getOrdersByColab() {
-		return ordersByColab;
 	}
 
 	@Override
@@ -124,7 +131,7 @@ public class Colaborador implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Colaborador other = (Colaborador) obj;
+		DadosBancarios other = (DadosBancarios) obj;
 		return Objects.equals(id, other.id);
 	}
 

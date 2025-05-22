@@ -1,6 +1,6 @@
 package com.marpe.cht.entities.enums;
 
-public enum DataState {
+public enum Datastate {
 
 	DELETED,
 	ACTIVE

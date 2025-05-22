@@ -22,10 +22,10 @@ public class CSVHelper {
         CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(out), format);) {
       for (User user : users) {
         List<String> data = Arrays.asList(
-              String.valueOf(user.getId()),
-              user.getNome(),
-              user.getEmail(),
-              user.getTelefone()
+//              String.valueOf(user.getId()),
+//              user.getNome(),
+//              user.getEmail(),
+//              user.getTelefone()
             );
 
         csvPrinter.printRecord(data);

@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.marpe.cht.entities.enums.DataState;
+import com.marpe.cht.entities.enums.Datastate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -65,7 +65,7 @@ public class OS implements Serializable {
 	protected Set<OSColab> oscolab = new HashSet<>();
 	
     @Enumerated(EnumType.ORDINAL)
-    private DataState state;
+    private Datastate state;
 	
 	public OS() {
 	}
@@ -80,7 +80,7 @@ public class OS implements Serializable {
 		this.cliente = cliente;
 		this.regional = regional;
 		this.coordenador = coordenador;
-		this.state = DataState.ACTIVE;
+		this.state = Datastate.ACTIVE;
 	}
 
 	public Long getId() {
@@ -163,11 +163,11 @@ public class OS implements Serializable {
 		this.oscolab.add(oscolab);
 	}
 	
-	public DataState getState() {
+	public Datastate getState() {
 		return state;
 	}
 
-	public void setState(DataState state) {
+	public void setState(Datastate state) {
 		this.state = state;
 	}
 	

@@ -47,11 +47,11 @@ public class ColaboradorController {
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		service.delete(id);
-		return ResponseEntity.noContent().build();
-	}
+//	@DeleteMapping(value = "/{id}")
+//	public ResponseEntity<Void> delete(@PathVariable Long id) {
+//		service.delete(id);
+//		return ResponseEntity.noContent().build();
+//	}
 	
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Colaborador> update(@PathVariable Long id, @RequestBody Colaborador obj) {

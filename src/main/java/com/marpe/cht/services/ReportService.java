@@ -62,33 +62,33 @@ public class ReportService {
 	 }
 
 	
-	public List<Object[]> topFiveOscolabSomadoPorPeriodo(String startDate, String endDate) {
-		
-		java.sql.Date sqlDataInicio = transformStringStartDateToSqlStartDate(startDate);
-		java.sql.Date sqlDataFim = transformStringEndDateToSqlEndDate(endDate);
+//	public List<Object[]> topFiveOscolabSomadoPorPeriodo(String startDate, String endDate) {
+//		
+//		java.sql.Date sqlDataInicio = transformStringStartDateToSqlStartDate(startDate);
+//		java.sql.Date sqlDataFim = transformStringEndDateToSqlEndDate(endDate);
+//	
+//		List<Object[]> result = reportRepository.topFiveOscolabSomadoPorPeriodo(sqlDataInicio, sqlDataFim);
+//		
+//		List<Object[]> completeList = result.stream()
+//			.map(x -> {
+//				x[0] = getNomeColaborador(new BigDecimal(x[0].toString()).longValue());
+//				return new Object[]{x[0], x[1]};
+//			})
+//			.collect(Collectors.toList());
+//		
+//		return completeList;
+//	}
 	
-		List<Object[]> result = reportRepository.topFiveOscolabSomadoPorPeriodo(sqlDataInicio, sqlDataFim);
-		
-		List<Object[]> completeList = result.stream()
-			.map(x -> {
-				x[0] = getNomeColaborador(new BigDecimal(x[0].toString()).longValue());
-				return new Object[]{x[0], x[1]};
-			})
-			.collect(Collectors.toList());
-		
-		return completeList;
-	}
-	
-	public String getNomeColaborador(Long id) {
-		List<Colaborador> list = colaboradorRepository.findAll();
-		String nome = "";
-		for(Colaborador c : list) {
-			if(c.getId().equals(id)) {
-				nome = c.getUser().getNome();
-			}
-		}
-		return nome;
-	}
+//	public String getNomeColaborador(Long id) {
+//		List<Colaborador> list = colaboradorRepository.findAll();
+//		String nome = "";
+//		for(Colaborador c : list) {
+//			if(c.getId().equals(id)) {
+//				nome = c.getUser().getNome();
+//			}
+//		}
+//		return nome;
+//	}
 		
 	public List<OS> listOSDesc5() {
 		List<OS> list = osRepository.findAll().stream()
