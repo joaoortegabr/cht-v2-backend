@@ -1,4 +1,4 @@
-package com.marpe.cht.resources;
+package com.marpe.cht.controllers;
 
 import java.net.URI;
 import java.util.List;
@@ -28,7 +28,7 @@ import com.marpe.cht.services.UserService;
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/api/users")
-public class UserResource {
+public class UserController {
 
 	@Autowired
 	private UserService service;

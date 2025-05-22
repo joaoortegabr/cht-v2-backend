@@ -1,4 +1,4 @@
-package com.marpe.cht.resources;
+package com.marpe.cht.controllers;
 
 import java.net.URI;
 import java.util.List;
@@ -16,31 +16,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.marpe.cht.entities.Colaborador;
-import com.marpe.cht.services.ColaboradorService;
+import com.marpe.cht.entities.OS;
+import com.marpe.cht.services.OSService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/colaboradores")
-public class ColaboradorResource {
+@RequestMapping(value = "/api/os")
+public class OSController {
 
 	@Autowired
-	private ColaboradorService service;
+	private OSService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Colaborador>> findAll() {
-		List<Colaborador> list = service.findAll();
+	public ResponseEntity<List<OS>> findAll() {
+		List<OS> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Colaborador> findById(@PathVariable Long id) {
-		Colaborador obj = service.findById(id);
+	public ResponseEntity<OS> findById(@PathVariable Long id) {
+		OS obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Colaborador> insert(@RequestBody Colaborador obj) {
+	public ResponseEntity<OS> insert(@RequestBody OS obj) {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(obj.getId()).toUri();
@@ -53,16 +53,23 @@ public class ColaboradorResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@DeleteMapping(value = "/{id}/remove")
+	public ResponseEntity<Void> remove(@PathVariable Long id) {
+		service.softDelete(id);
+		return ResponseEntity.noContent().build();
+	}	
+	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Colaborador> update(@PathVariable Long id, @RequestBody Colaborador obj) {
+	public ResponseEntity<OS> update(@PathVariable Long id, @RequestBody OS obj) {
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@GetMapping(value = "/desc")
-	public ResponseEntity<List<Colaborador>> findAllDescendingOrder() {
-		List<Colaborador> list = service.findAllDescendingOrder();
+	public ResponseEntity<List<OS>> findAllDescendingOrder() {
+		List<OS> list = service.findAllDescendingOrder();
 		return ResponseEntity.ok().body(list);
 	}
+	
 	
 }

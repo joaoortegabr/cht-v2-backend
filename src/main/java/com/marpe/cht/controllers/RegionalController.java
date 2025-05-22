@@ -1,4 +1,4 @@
-package com.marpe.cht.resources;
+package com.marpe.cht.controllers;
 
 import java.net.URI;
 import java.util.List;
@@ -16,31 +16,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.marpe.cht.entities.OS;
-import com.marpe.cht.services.OSService;
+import com.marpe.cht.entities.Regional;
+import com.marpe.cht.services.RegionalService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/os")
-public class OSResource {
+@RequestMapping(value = "/api/regionais")
+public class RegionalController {
 
 	@Autowired
-	private OSService service;
+	private RegionalService service;
 	
 	@GetMapping
-	public ResponseEntity<List<OS>> findAll() {
-		List<OS> list = service.findAll();
+	public ResponseEntity<List<Regional>> findAll() {
+		List<Regional> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<OS> findById(@PathVariable Long id) {
-		OS obj = service.findById(id);
+	public ResponseEntity<Regional> findById(@PathVariable Long id) {
+		Regional obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@PostMapping
-	public ResponseEntity<OS> insert(@RequestBody OS obj) {
+	public ResponseEntity<Regional> insert(@RequestBody Regional obj) {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(obj.getId()).toUri();
@@ -53,22 +53,10 @@ public class OSResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@DeleteMapping(value = "/{id}/remove")
-	public ResponseEntity<Void> remove(@PathVariable Long id) {
-		service.softDelete(id);
-		return ResponseEntity.noContent().build();
-	}	
-	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<OS> update(@PathVariable Long id, @RequestBody OS obj) {
+	public ResponseEntity<Regional> update(@PathVariable Long id, @RequestBody Regional obj) {
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
-	}
-	
-	@GetMapping(value = "/desc")
-	public ResponseEntity<List<OS>> findAllDescendingOrder() {
-		List<OS> list = service.findAllDescendingOrder();
-		return ResponseEntity.ok().body(list);
 	}
 	
 	

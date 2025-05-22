@@ -1,4 +1,4 @@
-package com.marpe.cht.resources;
+package com.marpe.cht.controllers;
 
 import java.net.URI;
 import java.util.List;
@@ -16,31 +16,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.marpe.cht.entities.Coordenador;
-import com.marpe.cht.services.CoordenadorService;
+import com.marpe.cht.entities.Cliente;
+import com.marpe.cht.services.ClienteService;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/coordenadores")
-public class CoordenadorResource {
+@RequestMapping(value = "/api/clientes")
+public class ClienteController {
 
 	@Autowired
-	private CoordenadorService service;
+	private ClienteService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Coordenador>> findAll() {
-		List<Coordenador> list = service.findAll();
+	public ResponseEntity<List<Cliente>> findAll() {
+		List<Cliente> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Coordenador> findById(@PathVariable Long id) {
-		Coordenador obj = service.findById(id);
+	public ResponseEntity<Cliente> findById(@PathVariable Long id) {
+		Cliente obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Coordenador> insert(@RequestBody Coordenador obj) {
+	public ResponseEntity<Cliente> insert(@RequestBody Cliente obj) {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(obj.getId()).toUri();
@@ -54,10 +54,11 @@ public class CoordenadorResource {
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Coordenador> update(@PathVariable Long id, @RequestBody Coordenador obj) {
+	public ResponseEntity<Cliente> update(@PathVariable Long id, @RequestBody Cliente obj) {
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}
+	
 	
 	
 }

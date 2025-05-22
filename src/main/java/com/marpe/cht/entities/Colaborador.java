@@ -7,6 +7,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.marpe.cht.entities.enums.DataState;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -19,16 +25,10 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.marpe.cht.entities.enums.DataState;
-
 @Entity
 @Table(name = "tb_colaborador")
 @SQLDelete(sql = "UPDATE tb_colaborador SET state = '0' WHERE id = ?")
-@Where(clause = "state = '1'")
+@SQLRestriction(value = "state = '1'")
 public class Colaborador implements Serializable {
 	private static final long serialVersionUID = 1L;
 

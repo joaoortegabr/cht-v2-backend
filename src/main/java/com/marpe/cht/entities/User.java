@@ -3,6 +3,14 @@ package com.marpe.cht.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.marpe.cht.entities.enums.DataState;
+import com.marpe.cht.entities.enums.Perfil;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -13,18 +21,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.marpe.cht.entities.enums.DataState;
-import com.marpe.cht.entities.enums.Perfil;
-
 @Entity
 @Table(name = "tb_user")
 @SQLDelete(sql = "UPDATE tb_user SET state = '0' WHERE id = ?")
-@Where(clause = "state = '1'")
+@SQLRestriction(value = "state = '1'")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	

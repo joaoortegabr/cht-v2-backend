@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.marpe.cht.entities.enums.DataState;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -18,16 +24,10 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.marpe.cht.entities.enums.DataState;
-
 @Entity
 @Table(name = "tb_coordenador")
 @SQLDelete(sql = "UPDATE tb_coordenador SET state = '0' WHERE id = ?")
-@Where(clause = "state = '1'")
+@SQLRestriction(value = "state = '1'")
 public class Coordenador implements Serializable  {
 	private static final long serialVersionUID = 1L;
 	

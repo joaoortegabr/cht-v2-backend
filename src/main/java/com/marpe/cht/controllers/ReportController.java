@@ -1,4 +1,4 @@
-package com.marpe.cht.resources;
+package com.marpe.cht.controllers;
 
 import java.io.ByteArrayInputStream;
 import java.time.format.DateTimeFormatter;
@@ -21,7 +21,7 @@ import com.marpe.cht.services.export.ExcelService;
 @CrossOrigin
 @RestController
 @RequestMapping(value = "/api/report")
-public class ReportResource {
+public class ReportController {
 
 	DateTimeFormatter dtfmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	

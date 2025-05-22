@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLRestriction;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marpe.cht.entities.enums.DataState;
@@ -23,7 +23,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "tb_cidade")
 @SQLDelete(sql = "UPDATE tb_cidade SET state = '0' WHERE id = ?")
-@Where(clause = "state = '1'")
+@SQLRestriction(value = "state = '1'")
 public class Cidade implements Serializable {
 	private static final long serialVersionUID = 1L;
 

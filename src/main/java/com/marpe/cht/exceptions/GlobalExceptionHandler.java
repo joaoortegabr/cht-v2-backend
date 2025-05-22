@@ -21,14 +21,6 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(status).body(err);
 	}
 	
-	@ExceptionHandler(DatabaseException.class)
-	public ResponseEntity<StandardError> handleDatabaseException(DatabaseException e, HttpServletRequest request) {
-		String error  = "Database error";
-		HttpStatus status = HttpStatus.CONFLICT;
-		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
-		return ResponseEntity.status(status).body(err);
-	}
-	
 	@ExceptionHandler(InvalidRequestException.class)
 	public ResponseEntity<StandardError> handleInvalidRequestException(InvalidRequestException e, HttpServletRequest request) {
 		String error  = "Invalid request";
@@ -41,6 +33,14 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<StandardError> handleExistingUserException(ExistingUserException e, HttpServletRequest request) {
 		String error  = "User already registered";
 		HttpStatus status = HttpStatus.BAD_REQUEST;
+		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(DatabaseException.class)
+	public ResponseEntity<StandardError> handleDatabaseException(DatabaseException e, HttpServletRequest request) {
+		String error  = "Database error";
+		HttpStatus status = HttpStatus.CONFLICT;
 		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
 		return ResponseEntity.status(status).body(err);
 	}
