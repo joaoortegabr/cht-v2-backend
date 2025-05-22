@@ -26,8 +26,8 @@ import com.marpe.cht.entities.enums.DataState;
 
 @Entity
 @Table(name = "tb_coordenador")
-@SQLDelete(sql = "UPDATE tb_coordenador SET state = '1' WHERE id = ?")
-@Where(clause = "state = '0'")
+@SQLDelete(sql = "UPDATE tb_coordenador SET state = '0' WHERE id = ?")
+@Where(clause = "state = '1'")
 public class Coordenador implements Serializable  {
 	private static final long serialVersionUID = 1L;
 	

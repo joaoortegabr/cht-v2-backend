@@ -30,8 +30,8 @@ import com.marpe.cht.entities.enums.DataState;
 
 @Entity
 @Table(name = "tb_os")
-//@SQLDelete(sql = "UPDATE tb_os SET state = '1' WHERE id = ?")
-@Where(clause = "state = '0'")
+//@SQLDelete(sql = "UPDATE tb_os SET state = '0' WHERE id = ?")
+@Where(clause = "state = '1'")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class OS implements Serializable {
 	private static final long serialVersionUID = 1L;

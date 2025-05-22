@@ -23,8 +23,8 @@ import com.marpe.cht.entities.enums.Perfil;
 
 @Entity
 @Table(name = "tb_user")
-@SQLDelete(sql = "UPDATE tb_user SET state = '1' WHERE id = ?")
-@Where(clause = "state = '0'")
+@SQLDelete(sql = "UPDATE tb_user SET state = '0' WHERE id = ?")
+@Where(clause = "state = '1'")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	

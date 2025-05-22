@@ -22,8 +22,8 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_cidade")
-@SQLDelete(sql = "UPDATE tb_cidade SET state = '1' WHERE id = ?")
-@Where(clause = "state = '0'")
+@SQLDelete(sql = "UPDATE tb_cidade SET state = '0' WHERE id = ?")
+@Where(clause = "state = '1'")
 public class Cidade implements Serializable {
 	private static final long serialVersionUID = 1L;
 
