@@ -14,10 +14,10 @@ import org.springframework.stereotype.Service;
 import com.marpe.cht.entities.OS;
 import com.marpe.cht.entities.OSColab;
 import com.marpe.cht.entities.enums.DataState;
+import com.marpe.cht.exceptions.DatabaseException;
 import com.marpe.cht.repositories.OSColabRepository;
 import com.marpe.cht.repositories.OSRepository;
-import com.marpe.cht.services.exceptions.DatabaseException;
-import com.marpe.cht.services.exceptions.ResourceNotFoundException;
+import com.marpe.cht.exceptions.ResourceNotFoundException;
 
 @Service
 public class OSService {
@@ -42,7 +42,7 @@ public class OSService {
 	
 	public OS findById(Long id) {
 		Optional<OS> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+		return obj.orElseThrow(() -> new ResourceNotFoundException("Resource not found with id: " + id));
 	}
 	
 	public OS insert(OS obj) {
@@ -53,7 +53,7 @@ public class OSService {
 		try {
 			repository.deleteById(id);	
 		} catch(EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException("Resource not found with id: " + id);
 		} catch(DataIntegrityViolationException e) {
 			throw new DatabaseException(e.getMessage());
 		}
@@ -70,7 +70,7 @@ public class OSService {
 			}
 			repository.save(os);
 		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException("Resource not found with id: " + id);
 		}
 	}
 	
@@ -80,7 +80,7 @@ public class OSService {
 			updateData(entity, obj);
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException("Resource not found with id: " + id);
 		}
 	}
 

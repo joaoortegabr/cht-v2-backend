@@ -21,9 +21,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.marpe.cht.entities.User;
+import com.marpe.cht.exceptions.ExistingUserException;
 import com.marpe.cht.repositories.UserRepository;
 import com.marpe.cht.services.UserService;
-import com.marpe.cht.services.exceptions.ExistingUserException;
 
 @CrossOrigin
 @RestController

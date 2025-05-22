@@ -15,9 +15,9 @@ import com.marpe.cht.entities.Cidade;
 import com.marpe.cht.entities.Colaborador;
 import com.marpe.cht.entities.OSColab;
 import com.marpe.cht.entities.User;
+import com.marpe.cht.exceptions.DatabaseException;
 import com.marpe.cht.repositories.ColaboradorRepository;
-import com.marpe.cht.services.exceptions.DatabaseException;
-import com.marpe.cht.services.exceptions.ResourceNotFoundException;
+import com.marpe.cht.exceptions.ResourceNotFoundException;
 
 @Service
 public class ColaboradorService {
@@ -44,7 +44,7 @@ public class ColaboradorService {
 	
 	public Colaborador findById(Long id) {
 		Optional<Colaborador> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+		return obj.orElseThrow(() -> new ResourceNotFoundException("Resource not found with id: " + id));
 	}
 	
 	public Colaborador insert(Colaborador obj) {
@@ -57,7 +57,7 @@ public class ColaboradorService {
 			substituiColaboradorNulo(colaborador);
 			repository.deleteById(id);
 		} catch(EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException("Resource not found with id: " + id);
 		} catch(DataIntegrityViolationException e) {
 			throw new DatabaseException(e.getMessage());
 		}
@@ -69,7 +69,7 @@ public class ColaboradorService {
 			updateData(entity, obj);
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException("Resource not found with id: " + id);
 		}
 	}
 

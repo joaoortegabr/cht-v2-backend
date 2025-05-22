@@ -17,11 +17,11 @@ import org.springframework.stereotype.Service;
 import com.marpe.cht.entities.Colaborador;
 import com.marpe.cht.entities.OS;
 import com.marpe.cht.entities.OSColab;
+import com.marpe.cht.exceptions.InvalidRequestException;
 import com.marpe.cht.repositories.ColaboradorRepository;
 import com.marpe.cht.repositories.OSColabRepository;
 import com.marpe.cht.repositories.OSRepository;
 import com.marpe.cht.repositories.ReportRepository;
-import com.marpe.cht.services.exceptions.InvalidRequestException;
 
 @Service
 public class ReportService {

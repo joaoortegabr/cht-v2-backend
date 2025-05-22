@@ -11,9 +11,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.marpe.cht.entities.Coordenador;
+import com.marpe.cht.exceptions.DatabaseException;
 import com.marpe.cht.repositories.CoordenadorRepository;
-import com.marpe.cht.services.exceptions.DatabaseException;
-import com.marpe.cht.services.exceptions.ResourceNotFoundException;
+import com.marpe.cht.exceptions.ResourceNotFoundException;
 
 @Service
 public class CoordenadorService {
@@ -27,7 +27,7 @@ public class CoordenadorService {
 	
 	public Coordenador findById(Long id) {
 		Optional<Coordenador> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+		return obj.orElseThrow(() -> new ResourceNotFoundException("Resource not found with id: " + id));
 	}
 	
 	public Coordenador insert(Coordenador obj) {
@@ -38,7 +38,7 @@ public class CoordenadorService {
 		try {
 			repository.deleteById(id);	
 		} catch(EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException("Resource not found with id: " + id);
 		} catch(DataIntegrityViolationException e) {
 			throw new DatabaseException(e.getMessage());
 		}
@@ -50,7 +50,7 @@ public class CoordenadorService {
 			updateData(entity, obj);
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException("Resource not found with id: " + id);
 		}
 	}
 

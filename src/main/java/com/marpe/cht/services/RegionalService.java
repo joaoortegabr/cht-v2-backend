@@ -11,9 +11,9 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.marpe.cht.entities.Regional;
+import com.marpe.cht.exceptions.DatabaseException;
 import com.marpe.cht.repositories.RegionalRepository;
-import com.marpe.cht.services.exceptions.DatabaseException;
-import com.marpe.cht.services.exceptions.ResourceNotFoundException;
+import com.marpe.cht.exceptions.ResourceNotFoundException;
 
 @Service
 public class RegionalService {
@@ -27,7 +27,7 @@ public class RegionalService {
 	
 	public Regional findById(Long id) {
 		Optional<Regional> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+		return obj.orElseThrow(() -> new ResourceNotFoundException("Resource not found with id: " + id));
 	}
 	
 	public Regional insert(Regional obj) {
@@ -38,7 +38,7 @@ public class RegionalService {
 		try {
 			repository.deleteById(id);	
 		} catch(EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException("Resource not found with id: " + id);
 		} catch(DataIntegrityViolationException e) {
 			throw new DatabaseException(e.getMessage());
 		}
@@ -50,7 +50,7 @@ public class RegionalService {
 			updateData(entity, obj);
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException("Resource not found with id: " + id);
 		}
 	}
 

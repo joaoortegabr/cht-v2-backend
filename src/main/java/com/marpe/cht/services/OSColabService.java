@@ -15,11 +15,11 @@ import org.springframework.stereotype.Service;
 
 import com.marpe.cht.entities.OS;
 import com.marpe.cht.entities.OSColab;
+import com.marpe.cht.exceptions.DatabaseException;
 import com.marpe.cht.repositories.OSColabRepository;
 import com.marpe.cht.repositories.OSRepository;
 import com.marpe.cht.repositories.UserRepository;
-import com.marpe.cht.services.exceptions.DatabaseException;
-import com.marpe.cht.services.exceptions.ResourceNotFoundException;
+import com.marpe.cht.exceptions.ResourceNotFoundException;
 
 @Service
 public class OSColabService {
@@ -48,7 +48,7 @@ public class OSColabService {
 	
 	public OSColab findById(Long id) {
 		Optional<OSColab> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
+		return obj.orElseThrow(() -> new ResourceNotFoundException("Resource not found with id: " + id));
 	}
 	
 	public OSColab insert(OSColab obj) {
@@ -62,7 +62,7 @@ public class OSColabService {
 			os.get().addOscolab(obj);
 			return repository.save(obj);
 		} catch (Exception e) {
-			throw new ResourceNotFoundException(obj);
+			throw new ResourceNotFoundException("Resource not found with id: " + obj);
 		}
 	}
 
@@ -70,7 +70,7 @@ public class OSColabService {
 		try {
 			repository.deleteById(id);	
 		} catch(EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException("Resource not found with id: " + id);
 		} catch(DataIntegrityViolationException e) {
 			throw new DatabaseException(e.getMessage());
 		}
@@ -84,7 +84,7 @@ public class OSColabService {
 			updateData(entity, obj, os.get());
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException(id);
+			throw new ResourceNotFoundException("Resource not found with id: " + id);
 		}
 	}
 

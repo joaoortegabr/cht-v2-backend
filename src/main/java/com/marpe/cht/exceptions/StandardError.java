@@ -1,4 +1,4 @@
-package com.marpe.cht.resources.exceptions;
+package com.marpe.cht.exceptions;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -6,7 +6,7 @@ import java.time.Instant;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class StandardError implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4268911902388954954L;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant timestamp;
