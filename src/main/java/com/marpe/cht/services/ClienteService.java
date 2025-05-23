@@ -59,10 +59,10 @@ public class ClienteService {
 			cliente.setState(Datastate.ACTIVE);
 	        return clienteRepository.save(cliente);
 		} catch(ConstraintViolationException e) {
-			throw new ConstraintViolationException("Error validating input data: {}", e.getConstraintViolations());
+			throw new ConstraintViolationException("Error validating Cliente input data: {}", e.getConstraintViolations());
 		} catch(DataIntegrityViolationException e) {
-			log.error("Error registering input data in database: {}", e.getMessage());
-			throw new DataIntegrityViolationException("Error registering input data in database.");
+			log.error("Error registering Cliente input data in database: {}", e.getMessage());
+			throw new DataIntegrityViolationException("Error registering Cliente input data in database.");
 		}
 	}
     
@@ -75,10 +75,10 @@ public class ClienteService {
 			cliente.setCidade(request.getCidade());
 			return clienteRepository.save(cliente);
 		} catch(ConstraintViolationException e) {
-			throw new ConstraintViolationException("Error validating input data: {}", e.getConstraintViolations());
+			throw new ConstraintViolationException("Error validating Cliente input data: {}", e.getConstraintViolations());
 		} catch(DataIntegrityViolationException e) {
-			log.error("Error updating input data in database: {}", e.getMessage());
-			throw new DataIntegrityViolationException("Error updating input data in database.");
+			log.error("Error updating Cliente input data in database: {}", e.getMessage());
+			throw new DataIntegrityViolationException("Error updating Cliente input data in database.");
 		}
 	}
 
@@ -86,9 +86,7 @@ public class ClienteService {
 	public String delete(Long id) {
 		log.info("Executing service to delete a Cliente with param: id={}", id);
 		try {
-			Cliente cliente = findById(id);
-			cliente.setState(Datastate.DELETED);
-			//clienteRepository.deleteById(id);
+			clienteRepository.deleteById(id);
 			return "Registro removido com sucesso.";
 		} catch(EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundException("Cliente not found with id: " + id);

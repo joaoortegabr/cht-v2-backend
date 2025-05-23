@@ -49,10 +49,10 @@ public class DadosBancariosService {
 			dadosBancarios.setState(Datastate.ACTIVE);
 	        return dadosBancariosRepository.save(dadosBancarios);
 		} catch(ConstraintViolationException e) {
-			throw new ConstraintViolationException("Error validating input data: {}", e.getConstraintViolations());
+			throw new ConstraintViolationException("Error validating DadosBancarios input data: {}", e.getConstraintViolations());
 		} catch(DataIntegrityViolationException e) {
-			log.error("Error registering input data in database: {}", e.getMessage());
-			throw new DataIntegrityViolationException("Error registering input data in database.");
+			log.error("Error registering DadosBancarios input data in database: {}", e.getMessage());
+			throw new DataIntegrityViolationException("Error registering DadosBancarios input data in database.");
 		}
 	}
     
@@ -68,10 +68,10 @@ public class DadosBancariosService {
 			dadosBancarios.setTitular(request.getTitular());
 			return dadosBancariosRepository.save(dadosBancarios);
 		} catch(ConstraintViolationException e) {
-			throw new ConstraintViolationException("Error validating input data: {}", e.getConstraintViolations());
+			throw new ConstraintViolationException("Error validating DadosBancarios input data: {}", e.getConstraintViolations());
 		} catch(DataIntegrityViolationException e) {
-			log.error("Error updating input data in database: {}", e.getMessage());
-			throw new DataIntegrityViolationException("Error updating input data in database.");
+			log.error("Error updating DadosBancarios input data in database: {}", e.getMessage());
+			throw new DataIntegrityViolationException("Error updating DadosBancarios input data in database.");
 		}
 	}
     
