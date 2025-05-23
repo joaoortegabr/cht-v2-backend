@@ -3,10 +3,10 @@ package com.marpe.cht.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.marpe.cht.entities.OS;
+import com.marpe.cht.entities.Order;
 
 @Repository
-public interface OSRepository extends JpaRepository<OS, Long> {
+public interface OSRepository extends JpaRepository<Order, Long> {
 
 
 }

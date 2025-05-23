@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.marpe.cht.entities.Colaborador;
-import com.marpe.cht.entities.OS;
-import com.marpe.cht.entities.OSColab;
+import com.marpe.cht.entities.Order;
+import com.marpe.cht.entities.Atividade;
 import com.marpe.cht.exceptions.InvalidRequestException;
 import com.marpe.cht.repositories.ColaboradorRepository;
 import com.marpe.cht.repositories.OSColabRepository;
@@ -41,13 +41,13 @@ public class ReportService {
 	private ReportRepository reportRepository;
 	
 
-	public List<OSColab> OSColabPorPeriodo(String startDate, String endDate, Boolean todosPagos) {
+	public List<Atividade> OSColabPorPeriodo(String startDate, String endDate, Boolean todosPagos) {
 	    
 		LocalDate DataInicio = LocalDate.parse(startDate, dtfmt);
 		LocalDate DataFim = LocalDate.parse(endDate, dtfmt);
 		
-		List<OSColab> oscolab = oscolabRepository.findAll();
-		List<OSColab> filtradas = oscolab.stream()
+		List<Atividade> oscolab = oscolabRepository.findAll();
+		List<Atividade> filtradas = oscolab.stream()
 			.filter(x -> x.getOs().getDataInicio().isEqual(DataInicio) || x.getOs().getDataInicio().isAfter(DataInicio))
 			.filter(x -> x.getOs().getDataInicio().isEqual(DataFim) || x.getOs().getDataInicio().isBefore(DataFim))
 			.filter(x -> x.getOs().getConcluida().equals(true))
@@ -90,16 +90,16 @@ public class ReportService {
 //		return nome;
 //	}
 		
-	public List<OS> listOSDesc5() {
-		List<OS> list = osRepository.findAll().stream()
+	public List<Order> listOSDesc5() {
+		List<Order> list = osRepository.findAll().stream()
 				.sorted((f1, f2) -> Long.compare(f2.getId(), f1.getId()))
 				.limit(5)
 				.collect(Collectors.toList());
 		return list;
 	}
 	
-	public List<OSColab> listOSColabDesc5() {
-		List<OSColab> list = oscolabRepository.findAll().stream()
+	public List<Atividade> listOSColabDesc5() {
+		List<Atividade> list = oscolabRepository.findAll().stream()
 				.filter(x -> x.getHoraFinal() != null)
 				.sorted((f1, f2) -> Long.compare(f2.getId(), f1.getId()))
 				.limit(5)

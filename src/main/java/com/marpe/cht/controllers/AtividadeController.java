@@ -16,31 +16,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.marpe.cht.entities.OS;
-import com.marpe.cht.services.OSService;
+import com.marpe.cht.entities.Atividade;
+import com.marpe.cht.services.OSColabService;
 
-@CrossOrigin
 @RestController
-@RequestMapping(value = "/os")
-public class OSController {
+@RequestMapping(value = "/atividades")
+public class AtividadeController {
 
 	@Autowired
-	private OSService service;
+	private OSColabService service;
 	
 	@GetMapping
-	public ResponseEntity<List<OS>> findAll() {
-		List<OS> list = service.findAll();
+	public ResponseEntity<List<Atividade>> findAll() {
+		List<Atividade> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<OS> findById(@PathVariable Long id) {
-		OS obj = service.findById(id);
+	public ResponseEntity<Atividade> findById(@PathVariable Long id) {
+		Atividade obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<OS> insert(@RequestBody OS obj) {
+	public ResponseEntity<Atividade> insert(@RequestBody Atividade obj) {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(obj.getId()).toUri();
@@ -53,21 +52,15 @@ public class OSController {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@DeleteMapping(value = "/{id}/remove")
-	public ResponseEntity<Void> remove(@PathVariable Long id) {
-		service.softDelete(id);
-		return ResponseEntity.noContent().build();
-	}	
-	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<OS> update(@PathVariable Long id, @RequestBody OS obj) {
+	public ResponseEntity<Atividade> update(@PathVariable Long id, @RequestBody Atividade obj) {
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@GetMapping(value = "/desc")
-	public ResponseEntity<List<OS>> findAllDescendingOrder() {
-		List<OS> list = service.findAllDescendingOrder();
+	public ResponseEntity<List<Atividade>> findAllDescendingOrder() {
+		List<Atividade> list = service.findAllDescendingOrder();
 		return ResponseEntity.ok().body(list);
 	}
 	

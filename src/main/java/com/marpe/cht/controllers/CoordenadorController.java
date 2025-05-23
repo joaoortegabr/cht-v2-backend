@@ -19,7 +19,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.marpe.cht.entities.Coordenador;
 import com.marpe.cht.services.CoordenadorService;
 
-@CrossOrigin
 @RestController
 @RequestMapping(value = "/coordenadores")
 public class CoordenadorController {

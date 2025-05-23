@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.marpe.cht.entities.Colaborador;
 import com.marpe.cht.entities.Coordenador;
-import com.marpe.cht.entities.OS;
-import com.marpe.cht.entities.OSColab;
+import com.marpe.cht.entities.Order;
+import com.marpe.cht.entities.Atividade;
 import com.marpe.cht.exceptions.InvalidRequestException;
 import com.marpe.cht.export.helper.ExcelHelper;
 import com.marpe.cht.repositories.ColaboradorRepository;

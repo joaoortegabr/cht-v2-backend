@@ -34,7 +34,7 @@ public class Cliente implements Serializable {
 	private String cidade;
 	
 	@OneToMany(mappedBy = "cliente")
-	private List<OS> orders;
+	private List<Order> orders;
 	
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
@@ -71,7 +71,7 @@ public class Cliente implements Serializable {
 		this.cidade = cidade;
 	}
 	
-	public List<OS> getOrders() {
+	public List<Order> getOrders() {
 		return orders;
 	}
 	

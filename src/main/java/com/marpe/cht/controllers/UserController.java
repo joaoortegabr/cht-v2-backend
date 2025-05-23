@@ -25,7 +25,6 @@ import com.marpe.cht.exceptions.ExistingUserException;
 import com.marpe.cht.repositories.UserRepository;
 import com.marpe.cht.services.UserService;
 
-@CrossOrigin
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {

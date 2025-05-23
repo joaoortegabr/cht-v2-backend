@@ -13,8 +13,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.marpe.cht.entities.OS;
-import com.marpe.cht.entities.OSColab;
+import com.marpe.cht.entities.Order;
+import com.marpe.cht.entities.Atividade;
 import com.marpe.cht.exceptions.DatabaseException;
 import com.marpe.cht.repositories.OSColabRepository;
 import com.marpe.cht.repositories.OSRepository;
@@ -33,12 +33,12 @@ public class OSColabService {
 	@Autowired
 	UserRepository userRepository;
 	
-	public List<OSColab> findAll() {
+	public List<Atividade> findAll() {
 		return repository.findAll();
 	}
 	
-	public List<OSColab> findAllDescendingOrder() {
-		List<OSColab> list = repository.findAll().stream()
+	public List<Atividade> findAllDescendingOrder() {
+		List<Atividade> list = repository.findAll().stream()
 				.sorted((f1, f2) -> Long.compare(f2.getId(), f1.getId()))
 				.collect(Collectors.toList());
 		return list;
@@ -46,14 +46,14 @@ public class OSColabService {
 	
 	DateTimeFormatter dtfmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	
-	public OSColab findById(Long id) {
-		Optional<OSColab> obj = repository.findById(id);
+	public Atividade findById(Long id) {
+		Optional<Atividade> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException("Resource not found with id: " + id));
 	}
 	
-	public OSColab insert(OSColab obj) {
+	public Atividade insert(Atividade obj) {
 		
-		Optional<OS> os = OSRepository.findById(obj.getOs().getId());
+		Optional<Order> os = OSRepository.findById(obj.getOs().getId());
 		try {
 			if(obj.getHoraFinal() != null) {
 				calcularHorasAPagar(obj, os.get());
@@ -76,10 +76,10 @@ public class OSColabService {
 		}
 	}
 	
-	public OSColab update(Long id, OSColab obj) {
+	public Atividade update(Long id, Atividade obj) {
 		try {
-			OSColab entity = repository.getReferenceById(id);
-			Optional<OS> os = OSRepository.findById(obj.getOs().getId());
+			Atividade entity = repository.getReferenceById(id);
+			Optional<Order> os = OSRepository.findById(obj.getOs().getId());
 					
 			updateData(entity, obj, os.get());
 			return repository.save(entity);
@@ -88,7 +88,7 @@ public class OSColabService {
 		}
 	}
 
-	private void updateData(OSColab entity, OSColab obj, OS os) {
+	private void updateData(Atividade entity, Atividade obj, Order os) {
 		entity.setHoraInicial(obj.getHoraInicial());
 		entity.setHoraFinal(obj.getHoraFinal());
 		entity.setIntervalo(obj.getIntervalo());
@@ -110,7 +110,7 @@ public class OSColabService {
 	
 	}
 	
-	public void calcularTotalAReceber(OSColab obj, OS os) {
+	public void calcularTotalAReceber(Atividade obj, Order os) {
 		
 		Double valorHoraDiurna = os.getRegional().getValorHoraDiurna();
 		Double valorHoraNoturna = os.getRegional().getValorHoraNoturna();
@@ -130,7 +130,7 @@ public class OSColabService {
 	}
 	
 	
-	public void calcularHorasAPagar(OSColab obj, OS os) {
+	public void calcularHorasAPagar(Atividade obj, Order os) {
 				
 		Duration periodo = Duration.between(obj.getHoraInicial(), obj.getHoraFinal());
 		Double totalHorasDiurnas = 0.0;

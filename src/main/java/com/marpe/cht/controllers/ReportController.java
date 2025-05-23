@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.marpe.cht.entities.Colaborador;
-import com.marpe.cht.entities.OS;
-import com.marpe.cht.entities.OSColab;
+import com.marpe.cht.entities.Order;
+import com.marpe.cht.entities.Atividade;
 import com.marpe.cht.services.ReportService;
 import com.marpe.cht.services.export.ExcelService;
 
@@ -50,14 +50,14 @@ public class ReportController {
 //	}
 	
 	@GetMapping(value = "/os/desc5")
-	public ResponseEntity<List<OS>> findAllOSDescOrder5() {
-		List<OS> list = reportService.listOSDesc5();
+	public ResponseEntity<List<Order>> findAllOSDescOrder5() {
+		List<Order> list = reportService.listOSDesc5();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/oscolab/desc5")
-	public ResponseEntity<List<OSColab>> findAllOSColabDescOrder5() {
-		List<OSColab> list = reportService.listOSColabDesc5();
+	public ResponseEntity<List<Atividade>> findAllOSColabDescOrder5() {
+		List<Atividade> list = reportService.listOSColabDesc5();
 		return ResponseEntity.ok().body(list);
 	}
 

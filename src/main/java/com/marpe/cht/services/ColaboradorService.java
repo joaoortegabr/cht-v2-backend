@@ -12,7 +12,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.marpe.cht.entities.Colaborador;
-import com.marpe.cht.entities.OSColab;
+import com.marpe.cht.entities.Atividade;
 import com.marpe.cht.entities.User;
 import com.marpe.cht.exceptions.DatabaseException;
 import com.marpe.cht.repositories.ColaboradorRepository;

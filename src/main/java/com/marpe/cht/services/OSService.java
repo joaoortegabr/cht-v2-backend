@@ -11,8 +11,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import com.marpe.cht.entities.OS;
-import com.marpe.cht.entities.OSColab;
+import com.marpe.cht.entities.Order;
+import com.marpe.cht.entities.Atividade;
 import com.marpe.cht.entities.enums.Datastate;
 import com.marpe.cht.exceptions.DatabaseException;
 import com.marpe.cht.repositories.OSColabRepository;
@@ -29,23 +29,23 @@ public class OSService {
 	private OSColabRepository oscolabRepository;
 	
 	
-	public List<OS> findAll() {
+	public List<Order> findAll() {
 		return repository.findAll();
 	}
 	
-	public List<OS> findAllDescendingOrder() {
-		List<OS> list = repository.findAll().stream()
+	public List<Order> findAllDescendingOrder() {
+		List<Order> list = repository.findAll().stream()
 				.sorted((f1, f2) -> Long.compare(f2.getId(), f1.getId()))
 				.collect(Collectors.toList());
 		return list;
 	}
 	
-	public OS findById(Long id) {
-		Optional<OS> obj = repository.findById(id);
+	public Order findById(Long id) {
+		Optional<Order> obj = repository.findById(id);
 		return obj.orElseThrow(() -> new ResourceNotFoundException("Resource not found with id: " + id));
 	}
 	
-	public OS insert(OS obj) {
+	public Order insert(Order obj) {
 		return repository.save(obj);
 	}
 	
@@ -61,10 +61,10 @@ public class OSService {
 	
 	public void softDelete(Long id) {
 		try {
-			OS os = repository.getReferenceById(id);
+			Order os = repository.getReferenceById(id);
 			os.setState(Datastate.DELETED);
 
-			for(OSColab oscolab : os.getOscolab()) {
+			for(Atividade oscolab : os.getOscolab()) {
 				oscolab.setState(Datastate.DELETED);
 				oscolabRepository.save(oscolab);
 			}
@@ -74,9 +74,9 @@ public class OSService {
 		}
 	}
 	
-	public OS update(Long id, OS obj) {
+	public Order update(Long id, Order obj) {
 		try {
-			OS entity = repository.getReferenceById(id);
+			Order entity = repository.getReferenceById(id);
 			updateData(entity, obj);
 			return repository.save(entity);
 		} catch (EntityNotFoundException e) {
@@ -84,7 +84,7 @@ public class OSService {
 		}
 	}
 
-	private void updateData(OS entity, OS obj) {
+	private void updateData(Order entity, Order obj) {
 		entity.setDataInicio(obj.getDataInicio());
 		entity.setHoraInicio(obj.getHoraInicio());
 		entity.setObservacao(obj.getObservacao());

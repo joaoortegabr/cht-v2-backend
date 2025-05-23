@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -29,13 +30,12 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_os")
-//@SQLDelete(sql = "UPDATE tb_os SET state = '0' WHERE id = ?")
+@Table(name = "tb_order")
+@SQLDelete(sql = "UPDATE tb_os SET state = '0' WHERE id = ?")
 @SQLRestriction(value = "state = '1'")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
-public class OS implements Serializable {
-	private static final long serialVersionUID = 1L;
-
+public class Order implements Serializable {
+	private static final long serialVersionUID = 5626482936468572904L;
+	
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,7 +50,7 @@ public class OS implements Serializable {
 	@Column(name = "concluida", nullable = false)
 	private Boolean concluida;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	@ManyToOne
@@ -62,15 +62,15 @@ public class OS implements Serializable {
 
 	@JsonManagedReference
 	@OneToMany(mappedBy = "os", fetch = FetchType.EAGER)
-	protected Set<OSColab> oscolab = new HashSet<>();
+	protected Set<Atividade> oscolab;
 	
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
 	
-	public OS() {
+	public Order() {
 	}
 
-	public OS(LocalDate dataInicio, LocalTime horaInicio, String observacao,
+	public Order(LocalDate dataInicio, LocalTime horaInicio, String observacao,
 			Cliente cliente, Regional regional, Coordenador coordenador) {
 		this.dataInicio = dataInicio;
 		this.horaInicio = horaInicio;
@@ -155,11 +155,11 @@ public class OS implements Serializable {
 		this.coordenador = coordenador;
 	}
 
-	public Set<OSColab> getOscolab() {
+	public Set<Atividade> getOscolab() {
 		return oscolab;
 	}
 
-	public void addOscolab(OSColab oscolab) {
+	public void addOscolab(Atividade oscolab) {
 		this.oscolab.add(oscolab);
 	}
 	
@@ -185,7 +185,7 @@ public class OS implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		OS other = (OS) obj;
+		Order other = (Order) obj;
 		return Objects.equals(id, other.id);
 	}
 		

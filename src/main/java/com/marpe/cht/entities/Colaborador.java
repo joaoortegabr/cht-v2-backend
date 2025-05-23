@@ -44,7 +44,7 @@ public class Colaborador implements Serializable {
 	private String cidade;
 	
 	@OneToMany(mappedBy = "colaborador")
-	private Set<OSColab> ordersByColab;
+	private Set<Atividade> ordersByColab;
 	
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
@@ -107,7 +107,7 @@ public class Colaborador implements Serializable {
 		this.state = state;
 	}
 
-	public Set<OSColab> getOrdersByColab() {
+	public Set<Atividade> getOrdersByColab() {
 		return ordersByColab;
 	}
 

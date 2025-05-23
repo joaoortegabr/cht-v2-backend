@@ -23,12 +23,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 	
 @Entity
-@Table(name = "tb_oscolab")
-@SQLDelete(sql = "UPDATE tb_oscolab SET state = '0' WHERE id = ?")
+@Table(name = "tb_atividade")
+@SQLDelete(sql = "UPDATE tb_atividade SET state = '0' WHERE id = ?")
 @SQLRestriction(value = "state = '1'")
-public class OSColab implements Serializable {
-	private static final long serialVersionUID = 1L;
-		
+public class Atividade implements Serializable {
+	private static final long serialVersionUID = -6319273513284159810L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -52,16 +52,16 @@ public class OSColab implements Serializable {
 	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "os_id")
-	private OS os;
+	private Order os;
 	
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
 	
-	public OSColab() {
+	public Atividade() {
 	}
 
-	public OSColab(LocalTime horaInicial, LocalTime horaFinal, Boolean intervalo,
-			Integer transportes, Boolean pago, Colaborador colaborador, OS os) {
+	public Atividade(LocalTime horaInicial, LocalTime horaFinal, Boolean intervalo,
+			Integer transportes, Boolean pago, Colaborador colaborador, Order os) {
 		this.horaInicial = horaInicial;
 		this.horaFinal = horaFinal;
 		this.totalHorasDiurnas = 0.0;
@@ -155,11 +155,11 @@ public class OSColab implements Serializable {
 		this.colaborador = colaborador;
 	}	
 	
-	public OS getOs() {
+	public Order getOs() {
 		return os;
 	}
 	
-	public void setOs(OS os) {
+	public void setOs(Order os) {
 		this.os = os;
 	}
 
@@ -184,7 +184,7 @@ public class OSColab implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		OSColab other = (OSColab) obj;
+		Atividade other = (Atividade) obj;
 		return Objects.equals(id, other.id);
 	}
 	

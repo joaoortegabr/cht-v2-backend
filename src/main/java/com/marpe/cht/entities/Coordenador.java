@@ -29,8 +29,8 @@ import jakarta.persistence.Table;
 @SQLDelete(sql = "UPDATE tb_coordenador SET state = '0' WHERE id = ?")
 @SQLRestriction(value = "state = '1'")
 public class Coordenador implements Serializable  {
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = -3213754637116158798L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -43,9 +43,8 @@ public class Coordenador implements Serializable  {
 	@JoinColumn(name = "regional_id")
 	private Regional regional;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy = "coordenador")
-	private List<OS> orders = new ArrayList<>();
+	private List<Order> orders;
 	
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
@@ -84,7 +83,7 @@ public class Coordenador implements Serializable  {
 		this.regional = regional;
 	}
 
-	public List<OS> getOrders() {
+	public List<Order> getOrders() {
 		return orders;
 	}
 	

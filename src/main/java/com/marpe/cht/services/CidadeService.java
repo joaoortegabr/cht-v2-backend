@@ -36,8 +36,7 @@ public class CidadeService {
     	log.info("Receiving cities list from IBGE site.");
         ResponseEntity<CidadeIBGEResponse[]> response = restTemplate.getForEntity(
             URL_IBGE,
-            CidadeIBGEResponse[].class
-        );
+            CidadeIBGEResponse[].class);
 
         return Arrays.stream(response.getBody())
                 .map(cidade -> new CidadeResponse(

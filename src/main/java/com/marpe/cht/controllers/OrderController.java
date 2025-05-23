@@ -16,31 +16,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.marpe.cht.entities.OSColab;
-import com.marpe.cht.services.OSColabService;
+import com.marpe.cht.entities.Order;
+import com.marpe.cht.services.OSService;
 
-@CrossOrigin
 @RestController
-@RequestMapping(value = "/oscolab")
-public class OSColabController {
+@RequestMapping(value = "/orders")
+public class OrderController {
 
 	@Autowired
-	private OSColabService service;
+	private OSService service;
 	
 	@GetMapping
-	public ResponseEntity<List<OSColab>> findAll() {
-		List<OSColab> list = service.findAll();
+	public ResponseEntity<List<Order>> findAll() {
+		List<Order> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<OSColab> findById(@PathVariable Long id) {
-		OSColab obj = service.findById(id);
+	public ResponseEntity<Order> findById(@PathVariable Long id) {
+		Order obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
-
+	
 	@PostMapping
-	public ResponseEntity<OSColab> insert(@RequestBody OSColab obj) {
+	public ResponseEntity<Order> insert(@RequestBody Order obj) {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(obj.getId()).toUri();
@@ -53,15 +52,21 @@ public class OSColabController {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@DeleteMapping(value = "/{id}/remove")
+	public ResponseEntity<Void> remove(@PathVariable Long id) {
+		service.softDelete(id);
+		return ResponseEntity.noContent().build();
+	}	
+	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<OSColab> update(@PathVariable Long id, @RequestBody OSColab obj) {
+	public ResponseEntity<Order> update(@PathVariable Long id, @RequestBody Order obj) {
 		obj = service.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}
 	
 	@GetMapping(value = "/desc")
-	public ResponseEntity<List<OSColab>> findAllDescendingOrder() {
-		List<OSColab> list = service.findAllDescendingOrder();
+	public ResponseEntity<List<Order>> findAllDescendingOrder() {
+		List<Order> list = service.findAllDescendingOrder();
 		return ResponseEntity.ok().body(list);
 	}
 	

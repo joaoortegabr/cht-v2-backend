@@ -19,7 +19,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.marpe.cht.entities.Regional;
 import com.marpe.cht.services.RegionalService;
 
-@CrossOrigin
 @RestController
 @RequestMapping(value = "/regionais")
 public class RegionalController {

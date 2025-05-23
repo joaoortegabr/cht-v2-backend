@@ -19,7 +19,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.marpe.cht.entities.Colaborador;
 import com.marpe.cht.services.ColaboradorService;
 
-@CrossOrigin
 @RestController
 @RequestMapping(value = "/colaboradores")
 public class ColaboradorController {
