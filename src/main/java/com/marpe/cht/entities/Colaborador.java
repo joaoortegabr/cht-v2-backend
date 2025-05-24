@@ -7,8 +7,10 @@ import java.util.Set;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.marpe.cht.entities.enums.Datastate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -16,7 +18,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -35,16 +36,16 @@ public class Colaborador implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "dados_pessoais")
 	private DadosPessoais dadosPessoais;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "dados_bancarios")
 	private DadosBancarios dadosBancarios;
 	private String cidade;
-	
 	@OneToMany(mappedBy = "colaborador")
-	private Set<Atividade> ordersByColab;
+	@JsonManagedReference
+	private Set<Atividade> atividades;
 	
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
@@ -98,6 +99,10 @@ public class Colaborador implements Serializable {
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
 	}
+	
+	public Set<Atividade> getAtividades() {
+		return atividades;
+	}
 
 	public Datastate getState() {
 		return state;
@@ -105,10 +110,6 @@ public class Colaborador implements Serializable {
 
 	public void setState(Datastate state) {
 		this.state = state;
-	}
-
-	public Set<Atividade> getOrdersByColab() {
-		return ordersByColab;
 	}
 
 	@Override

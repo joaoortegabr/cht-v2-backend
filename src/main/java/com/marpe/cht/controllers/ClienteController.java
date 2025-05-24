@@ -77,6 +77,6 @@ public class ClienteController {
 		log.info("Receiving request to delete a Cliente with param: id={}", id);
 		String msg = clienteService.delete(id);
 		return ResponseEntity.ok(msg);
-	}	
+	}
 	
 }

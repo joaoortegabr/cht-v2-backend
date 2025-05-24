@@ -4,7 +4,7 @@ import com.marpe.cht.entities.DadosBancarios;
 import com.marpe.cht.entities.DadosPessoais;
 import com.marpe.cht.entities.User;
 
-public record ColaboradorResponse(
+public record ColaboradorRequest(
 		Long id,
 		User user,
 		DadosPessoais dadosPessoais,
