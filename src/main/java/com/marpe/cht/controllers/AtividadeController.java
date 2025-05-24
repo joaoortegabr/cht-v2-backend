@@ -1,11 +1,12 @@
 package com.marpe.cht.controllers;
 
 import java.net.URI;
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mapstruct.factory.Mappers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,52 +18,65 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.marpe.cht.entities.Atividade;
-import com.marpe.cht.services.OSColabService;
+import com.marpe.cht.entities.dtos.AtividadeRequest;
+import com.marpe.cht.entities.dtos.AtividadeResponse;
+import com.marpe.cht.entities.mappers.AtividadeMapper;
+import com.marpe.cht.services.AtividadeService;
+import com.marpe.cht.utils.PaginationRequest;
 
 @RestController
 @RequestMapping(value = "/atividades")
 public class AtividadeController {
 
-	@Autowired
-	private OSColabService service;
+	private static final Logger log = LoggerFactory.getLogger(AtividadeController.class);
+	AtividadeMapper mapper = Mappers.getMapper(AtividadeMapper.class);
+
+	private AtividadeService atividadeService;
 	
+	public AtividadeController(AtividadeService atividadeService) {
+		this.atividadeService = atividadeService;
+	}
+
 	@GetMapping
-	public ResponseEntity<List<Atividade>> findAll() {
-		List<Atividade> list = service.findAll();
-		return ResponseEntity.ok().body(list);
+	public ResponseEntity<Page<AtividadeResponse>> findAll(PaginationRequest paginationRequest) {
+		log.info("Receiving request to findAll Atividades");
+		Page<Atividade> atividadePage = atividadeService.findAll(paginationRequest);
+		Page<AtividadeResponse> atividadeResponsePage = atividadePage.map(mapper::toAtividadeResponse);
+	    return ResponseEntity.ok(atividadeResponsePage);
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Atividade> findById(@PathVariable Long id) {
-		Atividade obj = service.findById(id);
-		return ResponseEntity.ok().body(obj);
-	}
-
-	@PostMapping
-	public ResponseEntity<Atividade> insert(@RequestBody Atividade obj) {
-		obj = service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(obj.getId()).toUri();
-		return ResponseEntity.created(uri).body(obj);
+	public ResponseEntity<AtividadeResponse> findById(@PathVariable Long id) {
+		log.info("Receiving request to findById an Atividade with param: id={}", id);
+		AtividadeResponse atividade = mapper.toAtividadeResponse(atividadeService.findById(id));
+		return ResponseEntity.ok().body(atividade);
 	}
 	
-	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		service.delete(id);
-		return ResponseEntity.noContent().build();
+	@PostMapping
+	public ResponseEntity<AtividadeResponse> create(@RequestBody AtividadeRequest request) {
+		log.info("Receiving request to create an Atividade with param: atividade={}", request);
+		Atividade atividade = mapper.toAtividade(request);
+		Atividade createdAtividade = atividadeService.create(atividade);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(createdAtividade.getId()).toUri();
+		AtividadeResponse atividadeResponse = mapper.toAtividadeResponse(createdAtividade);
+		return ResponseEntity.created(uri).body(atividadeResponse);
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Atividade> update(@PathVariable Long id, @RequestBody Atividade obj) {
-		obj = service.update(id, obj);
-		return ResponseEntity.ok().body(obj);
-	}
+	public ResponseEntity<AtividadeResponse> update(@PathVariable Long id, @RequestBody AtividadeRequest request) {
+		log.info("Receiving request to update an Atividade with params: id={} and atividade={}", id, request);
+		Atividade atividade = mapper.toAtividade(request);
+		Atividade updatedAtividade = atividadeService.update(id, atividade);
+		AtividadeResponse atividadeResponse = mapper.toAtividadeResponse(updatedAtividade);
+		return ResponseEntity.ok().body(atividadeResponse);
+	}	
 	
-	@GetMapping(value = "/desc")
-	public ResponseEntity<List<Atividade>> findAllDescendingOrder() {
-		List<Atividade> list = service.findAllDescendingOrder();
-		return ResponseEntity.ok().body(list);
-	}
-	
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<String> delete(@PathVariable Long id) {
+		log.info("Receiving request to delete an Atividade with param: id={}", id);
+		String msg = atividadeService.delete(id);
+		return ResponseEntity.ok(msg);
+	}	
 	
 }

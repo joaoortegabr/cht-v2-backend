@@ -52,7 +52,7 @@ public class DadosBancariosService {
 			throw new ConstraintViolationException("Error validating DadosBancarios input data: {}", e.getConstraintViolations());
 		} catch(DataIntegrityViolationException e) {
 			log.error("Error registering DadosBancarios input data in database: {}", e.getMessage());
-			throw new DataIntegrityViolationException("Error registering DadosBancarios input data in database.");
+			throw new DataIntegrityViolationException("Error registering DadosBancarios input data in database: " + e.getMessage());
 		}
 	}
     
@@ -70,8 +70,7 @@ public class DadosBancariosService {
 		} catch(ConstraintViolationException e) {
 			throw new ConstraintViolationException("Error validating DadosBancarios input data: {}", e.getConstraintViolations());
 		} catch(DataIntegrityViolationException e) {
-			log.error("Error updating DadosBancarios input data in database: {}", e.getMessage());
-			throw new DataIntegrityViolationException("Error updating DadosBancarios input data in database.");
+			throw new DataIntegrityViolationException("Error updating DadosBancarios input data in database: " + e.getMessage());
 		}
 	}
     

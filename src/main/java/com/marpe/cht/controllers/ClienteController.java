@@ -46,7 +46,7 @@ public class ClienteController {
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<ClienteResponse>findById(@PathVariable Long id) {
+	public ResponseEntity<ClienteResponse> findById(@PathVariable Long id) {
 		log.info("Receiving request to findById a Cliente with param: id={}", id);
 		ClienteResponse cliente = mapper.toClienteResponse(clienteService.findById(id));
 		return ResponseEntity.ok().body(cliente);

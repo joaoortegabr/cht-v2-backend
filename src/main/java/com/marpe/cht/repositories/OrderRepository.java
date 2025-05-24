@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.marpe.cht.entities.Order;
 
 @Repository
-public interface OSRepository extends JpaRepository<Order, Long> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
 
 
 }

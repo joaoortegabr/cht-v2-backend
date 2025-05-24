@@ -32,27 +32,26 @@ public class Atividade implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
+	@ManyToOne
+	@JoinColumn(name = "order_id")
+	@JsonBackReference
+	private Order order;
+	@ManyToOne
+	@JoinColumn(name = "colaborador_id")
+	private Colaborador colaborador;
 	@JsonFormat(pattern = "HH:mm")
 	protected LocalTime horaInicial;
 	@JsonFormat(pattern = "HH:mm")
 	protected LocalTime horaFinal;
 	protected Double totalHorasDiurnas;
 	protected Double totalHorasNoturnas;
-	@Column(name = "intervalo", nullable = false)
+	@Column(nullable = false)
 	protected Boolean intervalo;
 	protected Integer transportes;
 	protected Double totalAReceber;
-	@Column(name = "pago", nullable = false)
+	@Column(nullable = false)
 	protected Boolean pago;
-	
-	@ManyToOne
-	@JoinColumn(name = "colaborador_id")
-	private Colaborador colaborador;
-	
-	@JsonBackReference
-	@ManyToOne
-	@JoinColumn(name = "os_id")
-	private Order os;
 	
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
@@ -60,19 +59,18 @@ public class Atividade implements Serializable {
 	public Atividade() {
 	}
 
-	public Atividade(LocalTime horaInicial, LocalTime horaFinal, Boolean intervalo,
-			Integer transportes, Boolean pago, Colaborador colaborador, Order os) {
+	public Atividade(Order order, Colaborador colaborador, LocalTime horaInicial, LocalTime horaFinal,
+			Boolean intervalo, Integer transportes, Boolean pago) {
+		this.order = order;
+		this.colaborador = colaborador;
 		this.horaInicial = horaInicial;
 		this.horaFinal = horaFinal;
 		this.totalHorasDiurnas = 0.0;
 		this.totalHorasNoturnas = 0.0;
-		this.intervalo = false;
+		this.intervalo = intervalo;
 		this.transportes = transportes;
 		this.totalAReceber = 0.0;
-		this.pago = false;
-		this.colaborador = colaborador;
-		this.os = os;
-		this.state = Datastate.ACTIVE;
+		this.pago = pago;
 	}
 
 	public Long getId() {
@@ -82,7 +80,23 @@ public class Atividade implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
+	}
+
+	public Colaborador getColaborador() {
+		return colaborador;
+	}
+
+	public void setColaborador(Colaborador colaborador) {
+		this.colaborador = colaborador;
+	}
+
 	public LocalTime getHoraInicial() {
 		return horaInicial;
 	}
@@ -90,7 +104,7 @@ public class Atividade implements Serializable {
 	public void setHoraInicial(LocalTime horaInicial) {
 		this.horaInicial = horaInicial;
 	}
-	
+
 	public LocalTime getHoraFinal() {
 		return horaFinal;
 	}
@@ -98,7 +112,7 @@ public class Atividade implements Serializable {
 	public void setHoraFinal(LocalTime horaFinal) {
 		this.horaFinal = horaFinal;
 	}
-	
+
 	public Double getTotalHorasDiurnas() {
 		return totalHorasDiurnas;
 	}
@@ -106,7 +120,7 @@ public class Atividade implements Serializable {
 	public void setTotalHorasDiurnas(Double totalHorasDiurnas) {
 		this.totalHorasDiurnas = totalHorasDiurnas;
 	}
-	
+
 	public Double getTotalHorasNoturnas() {
 		return totalHorasNoturnas;
 	}
@@ -146,22 +160,6 @@ public class Atividade implements Serializable {
 	public void setPago(Boolean pago) {
 		this.pago = pago;
 	}
-	
-	public Colaborador getColaborador() {
-		return colaborador;
-	}
-	
-	public void setColaborador(Colaborador colaborador) {
-		this.colaborador = colaborador;
-	}	
-	
-	public Order getOs() {
-		return os;
-	}
-	
-	public void setOs(Order os) {
-		this.os = os;
-	}
 
 	public Datastate getState() {
 		return state;
@@ -170,7 +168,7 @@ public class Atividade implements Serializable {
 	public void setState(Datastate state) {
 		this.state = state;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -187,5 +185,5 @@ public class Atividade implements Serializable {
 		Atividade other = (Atividade) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
 }

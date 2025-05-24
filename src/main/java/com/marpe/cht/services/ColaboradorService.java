@@ -25,7 +25,7 @@ public class ColaboradorService {
 	private ColaboradorRepository repository;
 	
 	@Autowired
-	private OSColabService oscolabService;
+	private AtividadeService oscolabService;
 	
 	@Autowired
 	private UserService userService;

@@ -19,8 +19,8 @@ import com.marpe.cht.entities.Order;
 import com.marpe.cht.entities.Atividade;
 import com.marpe.cht.exceptions.InvalidRequestException;
 import com.marpe.cht.repositories.ColaboradorRepository;
-import com.marpe.cht.repositories.OSColabRepository;
-import com.marpe.cht.repositories.OSRepository;
+import com.marpe.cht.repositories.AtividadeRepository;
+import com.marpe.cht.repositories.OrderRepository;
 import com.marpe.cht.repositories.ReportRepository;
 
 @Service
@@ -29,10 +29,10 @@ public class ReportService {
 	DateTimeFormatter dtfmt = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 	
 	@Autowired
-	private OSColabRepository oscolabRepository;
+	private AtividadeRepository oscolabRepository;
 	
 	@Autowired
-	private OSRepository osRepository;
+	private OrderRepository osRepository;
 	
 	@Autowired
 	private ColaboradorRepository colaboradorRepository;

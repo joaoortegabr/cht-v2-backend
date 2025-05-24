@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.marpe.cht.entities.Atividade;
 
 @Repository
-public interface OSColabRepository extends JpaRepository<Atividade, Long> {
+public interface AtividadeRepository extends JpaRepository<Atividade, Long> {
 
 }

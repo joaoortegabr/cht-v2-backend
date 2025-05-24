@@ -35,7 +35,7 @@ public class DadosBancariosController {
 	}
 	
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<DadosBancariosResponse>findById(@PathVariable Long id) {
+	public ResponseEntity<DadosBancariosResponse> findById(@PathVariable Long id) {
 		log.info("Receiving request to findById a DadosBancarios with param: id={}", id);
 		DadosBancariosResponse dadosBancarios = mapper.toDadosBancariosResponse(dadosBancariosService.findById(id));
 		return ResponseEntity.ok().body(dadosBancarios);

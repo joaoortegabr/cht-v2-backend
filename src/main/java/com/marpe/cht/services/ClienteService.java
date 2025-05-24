@@ -61,8 +61,7 @@ public class ClienteService {
 		} catch(ConstraintViolationException e) {
 			throw new ConstraintViolationException("Error validating Cliente input data: {}", e.getConstraintViolations());
 		} catch(DataIntegrityViolationException e) {
-			log.error("Error registering Cliente input data in database: {}", e.getMessage());
-			throw new DataIntegrityViolationException("Error registering Cliente input data in database.");
+			throw new DataIntegrityViolationException("Error registering Cliente input data in database: " + e.getMessage());
 		}
 	}
     
@@ -77,8 +76,7 @@ public class ClienteService {
 		} catch(ConstraintViolationException e) {
 			throw new ConstraintViolationException("Error validating Cliente input data: {}", e.getConstraintViolations());
 		} catch(DataIntegrityViolationException e) {
-			log.error("Error updating Cliente input data in database: {}", e.getMessage());
-			throw new DataIntegrityViolationException("Error updating Cliente input data in database.");
+			throw new DataIntegrityViolationException("Error updating Cliente input data in database: " + e.getMessage());
 		}
 	}
 

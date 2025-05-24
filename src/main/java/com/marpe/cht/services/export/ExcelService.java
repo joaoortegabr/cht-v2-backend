@@ -18,8 +18,8 @@ import com.marpe.cht.exceptions.InvalidRequestException;
 import com.marpe.cht.export.helper.ExcelHelper;
 import com.marpe.cht.repositories.ColaboradorRepository;
 import com.marpe.cht.repositories.CoordenadorRepository;
-import com.marpe.cht.repositories.OSColabRepository;
-import com.marpe.cht.repositories.OSRepository;
+import com.marpe.cht.repositories.AtividadeRepository;
+import com.marpe.cht.repositories.OrderRepository;
 import com.marpe.cht.repositories.ReportRepository;
 import com.marpe.cht.repositories.UserRepository;
 
@@ -36,10 +36,10 @@ public class ExcelService {
   CoordenadorRepository coordenadorRepository;
   
   @Autowired
-  OSRepository osRepository;
+  OrderRepository osRepository;
   
   @Autowired
-  OSColabRepository oscolabRepository;
+  AtividadeRepository oscolabRepository;
   
   @Autowired
   ReportRepository reportRepository;
