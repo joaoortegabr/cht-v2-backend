@@ -53,6 +53,7 @@ public class Atividade implements Serializable {
 	@Column(nullable = false)
 	protected Boolean intervalo;
 	protected Integer transportes;
+	protected Double adicionalViagem;
 	protected Double totalAReceber;
 	@Column(nullable = false)
 	protected Boolean pago;
@@ -64,7 +65,7 @@ public class Atividade implements Serializable {
 	}
 
 	public Atividade(Order order, Colaborador colaborador, LocalTime horaInicial, LocalTime horaFinal,
-			Boolean intervalo, Integer transportes, Boolean pago) {
+			Boolean intervalo, Integer transportes, Double adicionalViagem, Boolean pago) {
 		this.order = order;
 		this.colaborador = colaborador;
 		this.horaInicial = horaInicial;
@@ -73,6 +74,7 @@ public class Atividade implements Serializable {
 		this.totalHorasNoturnas = 0.0;
 		this.intervalo = intervalo;
 		this.transportes = transportes;
+		this.adicionalViagem = adicionalViagem;
 		this.totalAReceber = 0.0;
 		this.pago = pago;
 	}
@@ -147,6 +149,14 @@ public class Atividade implements Serializable {
 
 	public void setTransportes(Integer transportes) {
 		this.transportes = transportes;
+	}
+
+	public Double getAdicionalViagem() {
+		return adicionalViagem;
+	}
+
+	public void setAdicionalViagem(Double adicionalViagem) {
+		this.adicionalViagem = adicionalViagem;
 	}
 
 	public Double getTotalAReceber() {

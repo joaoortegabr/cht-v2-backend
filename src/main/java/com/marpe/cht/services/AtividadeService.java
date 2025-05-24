@@ -78,6 +78,7 @@ public class AtividadeService {
 			}
 			atividade.setIntervalo(request.getIntervalo());
 			atividade.setTransportes(request.getTransportes());
+			atividade.setAdicionalViagem(request.getAdicionalViagem());
 			atividade.setPago(request.getPago());
 			atividade.setState(Datastate.ACTIVE);
 	        return atividadeRepository.save(atividade);
@@ -110,6 +111,7 @@ public class AtividadeService {
 			}
 			atividade.setIntervalo(request.getIntervalo());
 			atividade.setTransportes(request.getTransportes());
+			atividade.setAdicionalViagem(request.getAdicionalViagem());
 			atividade.setPago(request.getPago());
 			return atividadeRepository.save(atividade);
 		} catch(ConstraintViolationException e) {
@@ -137,7 +139,8 @@ public class AtividadeService {
 		Double valorHoraDiurna = order.getRegional().getValorHoraDiurna();
 		Double valorHoraNoturna = order.getRegional().getValorHoraNoturna();
 		Double valorTransporte = order.getRegional().getValorTransporte();
-		Integer transportes = atividade.getTransportes();	
+		Integer transportes = atividade.getTransportes();
+		Double adicionalViagem = atividade.getAdicionalViagem();
 		
 		Double totalAReceber = 0.0;
 		Double totalHorasDiurnas = atividade.getTotalHorasDiurnas();
@@ -148,6 +151,9 @@ public class AtividadeService {
 		if(transportes > 0) {
 			totalAReceber += (transportes * valorTransporte);
 		}
+		
+		totalAReceber += adicionalViagem;
+		
 		atividade.setTotalAReceber(totalAReceber);
 	}
 	

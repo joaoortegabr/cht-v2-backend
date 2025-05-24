@@ -12,6 +12,7 @@ public record AtividadeRequest(
 		LocalTime horaFinal,
 		Boolean intervalo,
 		Integer transportes,
+		Double adicionalViagem,
 		Boolean pago		
 		) {
 

@@ -18,6 +18,7 @@ public record AtividadeResponse(
 		Double totalHorasNoturnas,
 		Boolean intervalo,
 		Integer transportes,
+		Double adicionalViagem,
 		Double totalAReceber,
 		Boolean pago		
 		) {
