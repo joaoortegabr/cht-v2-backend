@@ -10,6 +10,7 @@ import com.marpe.cht.entities.dtos.OrderResponse;
 @Mapper(componentModel = "spring")
 public interface OrderMapper {
 
+	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "atividades", ignore = true)
 	@Mapping(target = "state", ignore = true)
 	Order toOrder(OrderRequest orderRequest);

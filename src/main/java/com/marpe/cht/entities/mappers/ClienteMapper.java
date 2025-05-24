@@ -10,6 +10,7 @@ import com.marpe.cht.entities.dtos.ClienteResponse;
 @Mapper(componentModel = "spring")
 public interface ClienteMapper {
 
+	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "orders", ignore = true)
 	@Mapping(target = "state", ignore = true)
 	Cliente toCliente(ClienteRequest clienteRequest);

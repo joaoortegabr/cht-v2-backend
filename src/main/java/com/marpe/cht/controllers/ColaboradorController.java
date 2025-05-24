@@ -77,6 +77,6 @@ public class ColaboradorController {
 		log.info("Receiving request to delete a Colaborador with param: id={}", id);
 		String msg = colaboradorService.delete(id);
 		return ResponseEntity.ok(msg);
-	}	
+	}
 	
 }

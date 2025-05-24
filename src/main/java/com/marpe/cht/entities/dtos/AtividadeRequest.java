@@ -6,7 +6,6 @@ import com.marpe.cht.entities.Colaborador;
 import com.marpe.cht.entities.Order;
 
 public record AtividadeRequest(
-		Long id,
 		Order order,
 		Colaborador colaborador,
 		LocalTime horaInicial,

@@ -12,6 +12,7 @@ import org.hibernate.annotations.SQLRestriction;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.marpe.cht.entities.enums.Datastate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -53,7 +54,7 @@ public class Order implements Serializable {
 	@Column(name = "concluida", nullable = false)
 	private Boolean concluida;
 
-	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private Set<Atividade> atividades;
 	

@@ -38,9 +38,6 @@ public class Regional implements Serializable {
 	private String descricao;
 	
 	@OneToMany(mappedBy = "regional")
-	private List<Coordenador> coordenadores;
-	
-	@OneToMany(mappedBy = "regional")
 	private List<Order> orders;
 	
     @Enumerated(EnumType.ORDINAL)

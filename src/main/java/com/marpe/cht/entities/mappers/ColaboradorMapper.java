@@ -10,6 +10,7 @@ import com.marpe.cht.entities.dtos.ColaboradorResponse;
 @Mapper(componentModel = "spring")
 public interface ColaboradorMapper {
 
+	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "atividades", ignore = true)
 	@Mapping(target = "state", ignore = true)
 	Colaborador toColaborador(ColaboradorRequest colaboradorRequest);

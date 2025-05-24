@@ -8,7 +8,6 @@ import com.marpe.cht.entities.Coordenador;
 import com.marpe.cht.entities.Regional;
 
 public record OrderRequest(
-		Long id,
 		Cliente cliente,
 		Regional regional,
 		Coordenador coordenador,

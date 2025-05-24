@@ -10,6 +10,7 @@ import com.marpe.cht.entities.dtos.DadosPessoaisResponse;
 @Mapper(componentModel = "spring")
 public interface DadosPessoaisMapper {
 
+	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "state", ignore = true)
 	DadosPessoais toDadosPessoais(DadosPessoaisRequest dadosPessoaisRequest);
     

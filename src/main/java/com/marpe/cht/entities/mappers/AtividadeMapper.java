@@ -10,6 +10,7 @@ import com.marpe.cht.entities.dtos.AtividadeResponse;
 @Mapper(componentModel = "spring")
 public interface AtividadeMapper {
 
+	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "totalAReceber", ignore = true)
 	@Mapping(target = "totalHorasDiurnas", ignore = true)
 	@Mapping(target = "totalHorasNoturnas", ignore = true)

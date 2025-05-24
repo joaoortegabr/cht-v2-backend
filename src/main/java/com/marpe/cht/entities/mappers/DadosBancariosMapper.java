@@ -10,6 +10,7 @@ import com.marpe.cht.entities.dtos.DadosBancariosResponse;
 @Mapper(componentModel = "spring")
 public interface DadosBancariosMapper {
 
+	@Mapping(target = "id", ignore = true)
 	@Mapping(target = "state", ignore = true)
 	DadosBancarios toDadosBancarios(DadosBancariosRequest dadosBancariosRequest);
     

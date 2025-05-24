@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import com.marpe.cht.entities.mappers.AtividadeMapper;
 import com.marpe.cht.entities.mappers.ClienteMapper;
 import com.marpe.cht.entities.mappers.ColaboradorMapper;
+import com.marpe.cht.entities.mappers.CoordenadorMapper;
 import com.marpe.cht.entities.mappers.DadosBancariosMapper;
 import com.marpe.cht.entities.mappers.DadosPessoaisMapper;
 import com.marpe.cht.entities.mappers.OrderMapper;
@@ -27,6 +28,11 @@ public class MapStructConfig {
 	@Bean
     ColaboradorMapper colaboradorMapper() {
         return Mappers.getMapper(ColaboradorMapper.class);
+    }
+	
+	@Bean
+    CoordenadorMapper coordenadorMapper() {
+        return Mappers.getMapper(CoordenadorMapper.class);
     }
 	
 	@Bean
