@@ -11,6 +11,8 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,31 +28,32 @@ import com.marpe.cht.repositories.ReportRepository;
 @Service
 public class ReportService {
 
+	private static final Logger log = LoggerFactory.getLogger(ReportService.class);
 	DateTimeFormatter dtfmt = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 	
-	@Autowired
-	private AtividadeRepository oscolabRepository;
+	private final AtividadeRepository atividadeRepository;
+	private final OrderRepository orderRepository;
+	private final ColaboradorRepository colaboradorRepository;
+	private final ReportRepository reportRepository;
 	
-	@Autowired
-	private OrderRepository osRepository;
-	
-	@Autowired
-	private ColaboradorRepository colaboradorRepository;
-	
-	@Autowired
-	private ReportRepository reportRepository;
-	
+	public ReportService(AtividadeRepository atividadeRepository, OrderRepository orderRepository,
+			ColaboradorRepository colaboradorRepository, ReportRepository reportRepository) {
+		this.atividadeRepository = atividadeRepository;
+		this.orderRepository = orderRepository;
+		this.colaboradorRepository = colaboradorRepository;
+		this.reportRepository = reportRepository;
+	}
 
-	public List<Atividade> OSColabPorPeriodo(String startDate, String endDate, Boolean todosPagos) {
+	public List<Atividade> AtividadePorPeriodo(String startDate, String endDate, Boolean todosPagos) {
 	    
 		LocalDate DataInicio = LocalDate.parse(startDate, dtfmt);
 		LocalDate DataFim = LocalDate.parse(endDate, dtfmt);
 		
-		List<Atividade> oscolab = oscolabRepository.findAll();
-		List<Atividade> filtradas = oscolab.stream()
-			.filter(x -> x.getOs().getDataInicio().isEqual(DataInicio) || x.getOs().getDataInicio().isAfter(DataInicio))
-			.filter(x -> x.getOs().getDataInicio().isEqual(DataFim) || x.getOs().getDataInicio().isBefore(DataFim))
-			.filter(x -> x.getOs().getConcluida().equals(true))
+		List<Atividade> atividade = atividadeRepository.findAll();
+		List<Atividade> filtradas = atividade.stream()
+			.filter(x -> x.getOrder().getDataInicio().isEqual(DataInicio) || x.getOrder().getDataInicio().isAfter(DataInicio))
+			.filter(x -> x.getOrder().getDataInicio().isEqual(DataFim) || x.getOrder().getDataInicio().isBefore(DataFim))
+			.filter(x -> x.getOrder().getConcluida().equals(true))
 			.filter(x -> x.getPago().equals(todosPagos))
 			.collect(Collectors.toList());
 		
@@ -62,44 +65,44 @@ public class ReportService {
 	 }
 
 	
-//	public List<Object[]> topFiveOscolabSomadoPorPeriodo(String startDate, String endDate) {
-//		
-//		java.sql.Date sqlDataInicio = transformStringStartDateToSqlStartDate(startDate);
-//		java.sql.Date sqlDataFim = transformStringEndDateToSqlEndDate(endDate);
-//	
-//		List<Object[]> result = reportRepository.topFiveOscolabSomadoPorPeriodo(sqlDataInicio, sqlDataFim);
-//		
-//		List<Object[]> completeList = result.stream()
-//			.map(x -> {
-//				x[0] = getNomeColaborador(new BigDecimal(x[0].toString()).longValue());
-//				return new Object[]{x[0], x[1]};
-//			})
-//			.collect(Collectors.toList());
-//		
-//		return completeList;
-//	}
-	
-//	public String getNomeColaborador(Long id) {
-//		List<Colaborador> list = colaboradorRepository.findAll();
-//		String nome = "";
-//		for(Colaborador c : list) {
-//			if(c.getId().equals(id)) {
-//				nome = c.getUser().getNome();
-//			}
-//		}
-//		return nome;
-//	}
+	public List<Object[]> topFiveAtividadeSomadoPorPeriodo(String startDate, String endDate) {
 		
-	public List<Order> listOSDesc5() {
-		List<Order> list = osRepository.findAll().stream()
+		java.sql.Date sqlDataInicio = transformStringStartDateToSqlStartDate(startDate);
+		java.sql.Date sqlDataFim = transformStringEndDateToSqlEndDate(endDate);
+	
+		List<Object[]> result = reportRepository.topFiveAtividadeSomadoPorPeriodo(sqlDataInicio, sqlDataFim);
+		
+		List<Object[]> completeList = result.stream()
+			.map(x -> {
+				x[0] = getNomeColaborador(new BigDecimal(x[0].toString()).longValue());
+				return new Object[]{x[0], x[1]};
+			})
+			.collect(Collectors.toList());
+		
+		return completeList;
+	}
+	
+	public String getNomeColaborador(Long id) {
+		List<Colaborador> list = colaboradorRepository.findAll();
+		String nome = "";
+		for(Colaborador c : list) {
+			if(c.getId().equals(id)) {
+				nome = c.getDadosPessoais().getNome();
+			}
+		}
+		return nome;
+	}
+		
+	public List<Order> listOrderDesc5() {
+		List<Order> list = orderRepository.findAll().stream()
 				.sorted((f1, f2) -> Long.compare(f2.getId(), f1.getId()))
 				.limit(5)
 				.collect(Collectors.toList());
 		return list;
 	}
 	
-	public List<Atividade> listOSColabDesc5() {
-		List<Atividade> list = oscolabRepository.findAll().stream()
+	public List<Atividade> listAtividadeDesc5() {
+		List<Atividade> list = atividadeRepository.findAll().stream()
 				.filter(x -> x.getHoraFinal() != null)
 				.sorted((f1, f2) -> Long.compare(f2.getId(), f1.getId()))
 				.limit(5)

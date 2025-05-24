@@ -33,7 +33,7 @@ public class DadosPessoais implements Serializable {
 	@OneToOne
 	@JoinColumn(name = "user_id")
 	private User user;
-	
+	private String nome;
 	private String rg;
 	@Column(unique = true)
 	private String cpf;
@@ -47,8 +47,9 @@ public class DadosPessoais implements Serializable {
 	public DadosPessoais() {
 	}
 
-	public DadosPessoais(User user, String rg, String cpf, String telefone, String email) {
+	public DadosPessoais(User user, String nome, String rg, String cpf, String telefone, String email) {
 		this.user = user;
+		this.nome = nome;
 		this.rg = rg;
 		this.cpf = cpf;
 		this.telefone = telefone;
@@ -69,6 +70,14 @@ public class DadosPessoais implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 
 	public String getRg() {

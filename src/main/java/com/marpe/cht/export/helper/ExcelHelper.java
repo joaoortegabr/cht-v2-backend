@@ -30,65 +30,65 @@ public class ExcelHelper {
 	  
 	  public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-//	  public static ByteArrayInputStream coordenadoresToExcel(List<Coordenador> coordenadores) {
-//	
-//		String[] HEADERs = { "Id", "Nome", "CPF", "RG", "Email", "Telefone", "Regional", "Perfil", "Ativo" };
-//		String SHEET = "Coordenadores";
-//		  
-//	    try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
-//	      Sheet sheet = workbook.createSheet(SHEET);
-//	
-//	      // Header
-//	      Row headerRow = sheet.createRow(0);
-//	
-//	      for (int col = 0; col < HEADERs.length; col++) {
-//	        Cell cell = headerRow.createCell(col);
-//	        cell.setCellValue(HEADERs[col]);
-//	      }
-//	
-//	      int rowIdx = 1;
-//	      for (Coordenador coordenador : coordenadores) {
-//	        Row row = sheet.createRow(rowIdx++);
-//	
+	  public static ByteArrayInputStream coordenadoresToExcel(List<Coordenador> coordenadores) {
+	
+		String[] HEADERs = { "Id", "Nome", "CPF", "RG", "Email", "Telefone", "Regional", "Perfil", "Ativo" };
+		String SHEET = "Coordenadores";
+		  
+	    try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
+	      Sheet sheet = workbook.createSheet(SHEET);
+	
+	      // Header
+	      Row headerRow = sheet.createRow(0);
+	
+	      for (int col = 0; col < HEADERs.length; col++) {
+	        Cell cell = headerRow.createCell(col);
+	        cell.setCellValue(HEADERs[col]);
+	      }
+	
+	      int rowIdx = 1;
+	      for (Coordenador coordenador : coordenadores) {
+	        Row row = sheet.createRow(rowIdx++);
+	
 //	        row.createCell(0).setCellValue(coordenador.getId());
-////	        row.createCell(1).setCellValue(coordenador.getUser().getNome());
-////	        row.createCell(2).setCellValue(coordenador.getUser().getCpf());
-////	        row.createCell(3).setCellValue(coordenador.getUser().getRg());
-////	        row.createCell(4).setCellValue(coordenador.getUser().getEmail());
-////	        row.createCell(5).setCellValue(coordenador.getUser().getTelefone());
-////	        row.createCell(6).setCellValue(coordenador.getRegional().getNome());
-////	        row.createCell(7).setCellValue(coordenador.getUser().getPerfil().toString());
-////	        row.createCell(8).setCellValue(coordenador.getUser().getAtivo());
-//	      }
-//	
-//	      workbook.write(out);
-//	      return new ByteArrayInputStream(out.toByteArray());
-//	    } catch (IOException e) {
-//	      throw new RuntimeException("Failed to import data to Excel file: " + e.getMessage());
-//	    }
-//	  }
-//	  
-//	  
-//	  public static ByteArrayInputStream colaboradoresToExcel(List<Colaborador> colaboradores) {
-//			
-//		String[] HEADERs = { "Id", "Nome", "CPF", "RG", "Email", "Telefone", "Cidade", "Banco", "Agencia", "Conta", "Operacao", "Detalhe", "Perfil", "Ativo" };
-//		String SHEET = "Colaboradores";
-//		  
-//	    try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
-//	      Sheet sheet = workbook.createSheet(SHEET);
-//	
-//	      // Header
-//	      Row headerRow = sheet.createRow(0);
-//	
-//	      for (int col = 0; col < HEADERs.length; col++) {
-//	        Cell cell = headerRow.createCell(col);
-//	        cell.setCellValue(HEADERs[col]);
-//	      }
-//	
-//	      int rowIdx = 1;
-//	      for (Colaborador colaborador : colaboradores) {
-//	        Row row = sheet.createRow(rowIdx++);
-//	
+//	        row.createCell(1).setCellValue(coordenador.getUser().getNome());
+//	        row.createCell(2).setCellValue(coordenador.getUser().getCpf());
+//	        row.createCell(3).setCellValue(coordenador.getUser().getRg());
+//	        row.createCell(4).setCellValue(coordenador.getUser().getEmail());
+//	        row.createCell(5).setCellValue(coordenador.getUser().getTelefone());
+//	        row.createCell(6).setCellValue(coordenador.getRegional().getNome());
+//	        row.createCell(7).setCellValue(coordenador.getUser().getPerfil().toString());
+//	        row.createCell(8).setCellValue(coordenador.getUser().getAtivo());
+	      }
+	
+	      workbook.write(out);
+	      return new ByteArrayInputStream(out.toByteArray());
+	    } catch (IOException e) {
+	      throw new RuntimeException("Failed to import data to Excel file: " + e.getMessage());
+	    }
+	  }
+	  
+	  
+	  public static ByteArrayInputStream colaboradoresToExcel(List<Colaborador> colaboradores) {
+			
+		String[] HEADERs = { "Id", "Nome", "CPF", "RG", "Email", "Telefone", "Cidade", "Banco", "Agencia", "Conta", "Operacao", "Detalhe", "Perfil", "Ativo" };
+		String SHEET = "Colaboradores";
+		  
+	    try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
+	      Sheet sheet = workbook.createSheet(SHEET);
+	
+	      // Header
+	      Row headerRow = sheet.createRow(0);
+	
+	      for (int col = 0; col < HEADERs.length; col++) {
+	        Cell cell = headerRow.createCell(col);
+	        cell.setCellValue(HEADERs[col]);
+	      }
+	
+	      int rowIdx = 1;
+	      for (Colaborador colaborador : colaboradores) {
+	        Row row = sheet.createRow(rowIdx++);
+	
 //	        row.createCell(0).setCellValue(colaborador.getId());
 //	        row.createCell(1).setCellValue(colaborador.getUser().getNome());
 //	        row.createCell(2).setCellValue(colaborador.getUser().getCpf());
@@ -103,34 +103,34 @@ public class ExcelHelper {
 //	        row.createCell(11).setCellValue(colaborador.getTitular());
 //	        row.createCell(12).setCellValue(colaborador.getUser().getPerfil().toString());
 //	        row.createCell(13).setCellValue(colaborador.getUser().getAtivo());
-//	      }
-//	
-//	      workbook.write(out);
-//	      return new ByteArrayInputStream(out.toByteArray());
-//	    } catch (IOException e) {
-//	      throw new RuntimeException("Failed to import data to Excel file: " + e.getMessage());
-//	    }
-//	  }
-//	  
-//	  
-//	  public static ByteArrayInputStream colaboradoresPorCidadeToExcel(List<Colaborador> colaboradores, String cidade) {
-//			
-//		String[] HEADERs = { "Nome", "CPF", "RG", "Telefone", "Cidade", "Ativo" };
-//		String SHEET = "Colaboradores Por Cidade";
-//		  
-//	    try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
-//	      Sheet sheet = workbook.createSheet(SHEET);
-//	
-//	      // Header
-//	      Row headerRow = sheet.createRow(0);
-//	
-//	      for (int col = 0; col < HEADERs.length; col++) {
-//	        Cell cell = headerRow.createCell(col);
-//	        cell.setCellValue(HEADERs[col]);
-//	      }
-//	
-//	      int rowIdx = 1;
-//	      for (Colaborador colaborador : colaboradores) {
+	      }
+	
+	      workbook.write(out);
+	      return new ByteArrayInputStream(out.toByteArray());
+	    } catch (IOException e) {
+	      throw new RuntimeException("Failed to import data to Excel file: " + e.getMessage());
+	    }
+	  }
+	  
+	  
+	  public static ByteArrayInputStream colaboradoresPorCidadeToExcel(List<Colaborador> colaboradores, String cidade) {
+			
+		String[] HEADERs = { "Nome", "CPF", "RG", "Telefone", "Cidade", "Ativo" };
+		String SHEET = "Colaboradores Por Cidade";
+		  
+	    try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
+	      Sheet sheet = workbook.createSheet(SHEET);
+	
+	      // Header
+	      Row headerRow = sheet.createRow(0);
+	
+	      for (int col = 0; col < HEADERs.length; col++) {
+	        Cell cell = headerRow.createCell(col);
+	        cell.setCellValue(HEADERs[col]);
+	      }
+	
+	      int rowIdx = 1;
+	      for (Colaborador colaborador : colaboradores) {
 //	    	  if(colaborador.getCidade().getNome().equals(cidade)) {
 //	    	  
 //	    		  Row row = sheet.createRow(rowIdx++);
@@ -142,87 +142,87 @@ public class ExcelHelper {
 //			      row.createCell(4).setCellValue(colaborador.getCidade().getNome());
 //			      row.createCell(5).setCellValue(colaborador.getUser().getAtivo());
 //		      }
-//	      }
-//	
-//	      workbook.write(out);
-//	      return new ByteArrayInputStream(out.toByteArray());
-//	    } catch (IOException e) {
-//	      throw new RuntimeException("Failed to import data to Excel file: " + e.getMessage());
-//	    }
-//	  }
-//
-//	  
-//
-//	  
-//	  public static ByteArrayInputStream osToExcel(List<OS> oss) {
-//			
-//		String[] HEADERs = { "Id", "Cliente", "Regional", "Coordenador", "DataInício", "HoraInício", "Obs", "TodosPagos", "Concluída", "Status" };
-//		String SHEET = "OS";
-//		  
-//	    try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
-//	      Sheet sheet = workbook.createSheet(SHEET);
-//	
-//	      // Header
-//	      Row headerRow = sheet.createRow(0);
-//	
-//	      for (int col = 0; col < HEADERs.length; col++) {
-//	        Cell cell = headerRow.createCell(col);
-//	        cell.setCellValue(HEADERs[col]);
-//	      }
-//	
-//	      int rowIdx = 1;
-//	      for (OS os : oss) {
-//	        Row row = sheet.createRow(rowIdx++);
-//	
-//	        row.createCell(0).setCellValue(os.getId());
-//	        row.createCell(1).setCellValue(os.getCliente().getNome());
-//	        row.createCell(2).setCellValue(os.getRegional().getNome());
-//	        row.createCell(3).setCellValue(os.getCoordenador().getUser().getNome());
-//	        row.createCell(4).setCellValue(os.getDataInicio().toString());
-//	        row.createCell(5).setCellValue(os.getHoraInicio().toString());
-//	        row.createCell(6).setCellValue(os.getObservacao());
-//	        row.createCell(7).setCellValue(os.getTodosPagos());
-//	        row.createCell(8).setCellValue(os.getConcluida());
-//	        row.createCell(9).setCellValue(os.getState().toString());
-//	      }
-//	
-//	      workbook.write(out);
-//	      return new ByteArrayInputStream(out.toByteArray());
-//	    } catch (IOException e) {
-//	      throw new RuntimeException("Failed to import data to Excel file: " + e.getMessage());
-//	    }
-//	  }
-//	  
-//	  
-//	  public static ByteArrayInputStream oscolabToExcel(List<OSColab> oscolabs) {
-//			
-//		String[] HEADERs = { "Id", "OS", "Cliente", "Coordenador", "DataInício", "Hora Inicial", "Hora Final", "Total Horas Diurnas", 
-//				"Total Horas Noturnas", "Fez intervalo", "Transportes usados", "Colaborador", "Total a receber", "Foi pago", 
-//				"Banco", "Agencia", "Conta", "Operacao", "Detalhe" };
-//		String SHEET = "Colaboradores na OS";
-//		  
-//		
-//		
-//	    try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
-//	      Sheet sheet = workbook.createSheet(SHEET);
-//	
-//	      // Header
-//	      Row headerRow = sheet.createRow(0);
-//	
-//	      for (int col = 0; col < HEADERs.length; col++) {
-//	        Cell cell = headerRow.createCell(col);
-//	        cell.setCellValue(HEADERs[col]);
-//	      }
-//	
-//	      int rowIdx = 1;
-//	      for (OSColab oscolab : oscolabs) {
-//	        Row row = sheet.createRow(rowIdx++);
-//	
+	      }
+	
+	      workbook.write(out);
+	      return new ByteArrayInputStream(out.toByteArray());
+	    } catch (IOException e) {
+	      throw new RuntimeException("Failed to import data to Excel file: " + e.getMessage());
+	    }
+	  }
+
+	  
+
+	  
+	  public static ByteArrayInputStream orderToExcel(List<Order> oss) {
+			
+		String[] HEADERs = { "Id", "Cliente", "Regional", "Coordenador", "DataInício", "HoraInício", "Obs", "TodosPagos", "Concluída", "Status" };
+		String SHEET = "OS";
+		  
+	    try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
+	      Sheet sheet = workbook.createSheet(SHEET);
+	
+	      // Header
+	      Row headerRow = sheet.createRow(0);
+	
+	      for (int col = 0; col < HEADERs.length; col++) {
+	        Cell cell = headerRow.createCell(col);
+	        cell.setCellValue(HEADERs[col]);
+	      }
+	
+	      int rowIdx = 1;
+	      for (Order os : oss) {
+	        Row row = sheet.createRow(rowIdx++);
+	
+	        row.createCell(0).setCellValue(os.getId());
+	        row.createCell(1).setCellValue(os.getCliente().getNome());
+	        row.createCell(2).setCellValue(os.getRegional().getNome());
+	        //row.createCell(3).setCellValue(os.getCoordenador().getDadosPessoais().getNome());
+	        row.createCell(4).setCellValue(os.getDataInicio().toString());
+	        row.createCell(5).setCellValue(os.getHoraInicio().toString());
+	        row.createCell(6).setCellValue(os.getObservacao());
+	        row.createCell(7).setCellValue(os.getTodosPagos());
+	        row.createCell(8).setCellValue(os.getConcluida());
+	        row.createCell(9).setCellValue(os.getState().toString());
+	      }
+	
+	      workbook.write(out);
+	      return new ByteArrayInputStream(out.toByteArray());
+	    } catch (IOException e) {
+	      throw new RuntimeException("Failed to import data to Excel file: " + e.getMessage());
+	    }
+	  }
+	  
+	  
+	  public static ByteArrayInputStream atividadeToExcel(List<Atividade> oscolabs) {
+			
+		String[] HEADERs = { "Id", "OS", "Cliente", "Coordenador", "DataInício", "Hora Inicial", "Hora Final", "Total Horas Diurnas", 
+				"Total Horas Noturnas", "Fez intervalo", "Transportes usados", "Colaborador", "Total a receber", "Foi pago", 
+				"Banco", "Agencia", "Conta", "Operacao", "Detalhe" };
+		String SHEET = "Colaboradores na OS";
+		  
+		
+		
+	    try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
+	      Sheet sheet = workbook.createSheet(SHEET);
+	
+	      // Header
+	      Row headerRow = sheet.createRow(0);
+	
+	      for (int col = 0; col < HEADERs.length; col++) {
+	        Cell cell = headerRow.createCell(col);
+	        cell.setCellValue(HEADERs[col]);
+	      }
+	
+	      int rowIdx = 1;
+	      for (Atividade oscolab : oscolabs) {
+	        Row row = sheet.createRow(rowIdx++);
+	
 //	        row.createCell(0).setCellValue(oscolab.getId());
-//	        row.createCell(1).setCellValue(oscolab.getOs().getId());
-//	        row.createCell(2).setCellValue(oscolab.getOs().getCliente().getNome());
-//	        row.createCell(3).setCellValue(oscolab.getOs().getCoordenador().getUser().getNome());
-//	        row.createCell(4).setCellValue(oscolab.getOs().getDataInicio().toString());
+//	        row.createCell(1).setCellValue(oscolab.getOrder().getId());
+//	        row.createCell(2).setCellValue(oscolab.getOrder().getCliente().getNome());
+//	        //row.createCell(3).setCellValue(oscolab.getOrder().getCoordenador().getDadosPessoais().getNome());
+//	        row.createCell(4).setCellValue(oscolab.getOrder().getDataInicio().toString());
 //	        if(oscolab.getHoraInicial() == null) {
 //	        	row.createCell(5).setCellValue("n/a");
 //	        } else {
@@ -257,37 +257,37 @@ public class ExcelHelper {
 //	        row.createCell(16).setCellValue(oscolab.getColaborador().getConta());
 //	        row.createCell(17).setCellValue(oscolab.getColaborador().getOperacao());
 //	        row.createCell(18).setCellValue(oscolab.getColaborador().getTitular());
-//
-//	      }
-//	
-//	      workbook.write(out);
-//	      return new ByteArrayInputStream(out.toByteArray());
-//	    } catch (IOException e) {
-//	      throw new RuntimeException("Failed to import data to Excel file: " + e.getMessage());
-//	    }
-//	  }
-//	  
-//	  public static ByteArrayInputStream oscolabPorPeriodo(List<OSColab> oscolabs) {
-//			
-//			String[] HEADERs = { "Id", "OS", "Colaborador", "Total a receber", "Foi pago", "Cliente", "Coordenador", 
-//					"DataInício", "Hora Inicial", "Hora Final", "Total Horas Diurnas", "Total Horas Noturnas", "Fez intervalo", "Transportes usados" };
-//			String SHEET = "Atividades por Periodo";
-//			  
-//		    try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
-//		      Sheet sheet = workbook.createSheet(SHEET);
-//		
-//		      // Header
-//		      Row headerRow = sheet.createRow(0);
-//		
-//		      for (int col = 0; col < HEADERs.length; col++) {
-//		        Cell cell = headerRow.createCell(col);
-//		        cell.setCellValue(HEADERs[col]);
-//		      }
-//		
-//		      int rowIdx = 1;
-//		      for (OSColab oscolab : oscolabs) {
-//		        Row row = sheet.createRow(rowIdx++);
-//		
+
+	      }
+	
+	      workbook.write(out);
+	      return new ByteArrayInputStream(out.toByteArray());
+	    } catch (IOException e) {
+	      throw new RuntimeException("Failed to import data to Excel file: " + e.getMessage());
+	    }
+	  }
+	  
+	  public static ByteArrayInputStream atividadePorPeriodo(List<Atividade> oscolabs) {
+			
+			String[] HEADERs = { "Id", "OS", "Colaborador", "Total a receber", "Foi pago", "Cliente", "Coordenador", 
+					"DataInício", "Hora Inicial", "Hora Final", "Total Horas Diurnas", "Total Horas Noturnas", "Fez intervalo", "Transportes usados" };
+			String SHEET = "Atividades por Periodo";
+			  
+		    try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
+		      Sheet sheet = workbook.createSheet(SHEET);
+		
+		      // Header
+		      Row headerRow = sheet.createRow(0);
+		
+		      for (int col = 0; col < HEADERs.length; col++) {
+		        Cell cell = headerRow.createCell(col);
+		        cell.setCellValue(HEADERs[col]);
+		      }
+		
+		      int rowIdx = 1;
+		      for (Atividade oscolab : oscolabs) {
+		        Row row = sheet.createRow(rowIdx++);
+		
 //		        row.createCell(0).setCellValue(oscolab.getId());
 //		        row.createCell(1).setCellValue(oscolab.getOs().getId());
 //		        row.createCell(2).setCellValue(oscolab.getColaborador().getUser().getNome());
@@ -302,37 +302,37 @@ public class ExcelHelper {
 //		        row.createCell(11).setCellValue(oscolab.getTotalHorasNoturnas());
 //		        row.createCell(12).setCellValue(oscolab.getIntervalo());
 //		        row.createCell(13).setCellValue(oscolab.getTransportes());
-//
-//		      }
-//		
-//		      workbook.write(out);
-//		      return new ByteArrayInputStream(out.toByteArray());
-//		    } catch (IOException e) {
-//		      throw new RuntimeException("Failed to import data to Excel file: " + e.getMessage());
-//		    }
-//		  }
-//	  
-//	  public static ByteArrayInputStream oscolabSomadoPorPeriodo(List<Colaborador> colaboradores, Map<Long, Double> result) {
-//			
-//			String[] HEADERs = { "Total a receber", "Colaborador", "Banco", "Agencia", "Conta", "Operacao", "Detalhe" };
-//			String SHEET = "Atividades Somado por Periodo";
-//			  
-//		    try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
-//		      Sheet sheet = workbook.createSheet(SHEET);
-//		
-//		      // Header
-//		      Row headerRow = sheet.createRow(0);
-//		
-//		      for (int col = 0; col < HEADERs.length; col++) {
-//		        Cell cell = headerRow.createCell(col);
-//		        cell.setCellValue(HEADERs[col]);
-//		      }
-//
-//		      int rowIdx = 1;
-//		      for (Map.Entry<Long, Double> x : result.entrySet()) {
-//		    	  
-//		          Row row = sheet.createRow(rowIdx++);
-//				
+
+		      }
+		
+		      workbook.write(out);
+		      return new ByteArrayInputStream(out.toByteArray());
+		    } catch (IOException e) {
+		      throw new RuntimeException("Failed to import data to Excel file: " + e.getMessage());
+		    }
+		  }
+	  
+	  public static ByteArrayInputStream atividadeSomadoPorPeriodo(List<Colaborador> colaboradores, Map<Long, Double> result) {
+			
+			String[] HEADERs = { "Total a receber", "Colaborador", "Banco", "Agencia", "Conta", "Operacao", "Detalhe" };
+			String SHEET = "Atividades Somado por Periodo";
+			  
+		    try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
+		      Sheet sheet = workbook.createSheet(SHEET);
+		
+		      // Header
+		      Row headerRow = sheet.createRow(0);
+		
+		      for (int col = 0; col < HEADERs.length; col++) {
+		        Cell cell = headerRow.createCell(col);
+		        cell.setCellValue(HEADERs[col]);
+		      }
+
+		      int rowIdx = 1;
+		      for (Map.Entry<Long, Double> x : result.entrySet()) {
+		    	  
+		          Row row = sheet.createRow(rowIdx++);
+				
 //			      row.createCell(0).setCellValue(nf.format(x.getValue()));
 //		          for(Colaborador c : colaboradores) {
 //		        	  if(x.getKey().equals(c.getId())) {
@@ -344,13 +344,13 @@ public class ExcelHelper {
 //		        		  row.createCell(6).setCellValue(c.getTitular());
 //		        	  }
 //		          }
-//		      }
-//		
-//		      workbook.write(out);
-//		      return new ByteArrayInputStream(out.toByteArray());
-//		    } catch (IOException e) {
-//		      throw new RuntimeException("Failed to import data to Excel file: " + e.getMessage());
-//		    }
-//	  }
+		      }
+		
+		      workbook.write(out);
+		      return new ByteArrayInputStream(out.toByteArray());
+		    } catch (IOException e) {
+		      throw new RuntimeException("Failed to import data to Excel file: " + e.getMessage());
+		    }
+	  }
 
 }

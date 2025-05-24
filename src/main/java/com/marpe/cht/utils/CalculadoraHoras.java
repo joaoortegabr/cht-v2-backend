@@ -2,9 +2,12 @@ package com.marpe.cht.utils;
 
 import java.time.Duration;
 
+import org.springframework.stereotype.Component;
+
 import com.marpe.cht.entities.Atividade;
 import com.marpe.cht.entities.Order;
 
+@Component
 public class CalculadoraHoras {
 
 	public void calcularHorasAPagar(Atividade atividade, Order order) {
