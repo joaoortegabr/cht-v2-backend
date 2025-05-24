@@ -11,6 +11,7 @@ import com.marpe.cht.entities.mappers.CoordenadorMapper;
 import com.marpe.cht.entities.mappers.DadosBancariosMapper;
 import com.marpe.cht.entities.mappers.DadosPessoaisMapper;
 import com.marpe.cht.entities.mappers.OrderMapper;
+import com.marpe.cht.entities.mappers.RegionalMapper;
 
 @Configuration
 public class MapStructConfig {
@@ -50,5 +51,9 @@ public class MapStructConfig {
         return Mappers.getMapper(OrderMapper.class);
     }
 	
+	@Bean
+    RegionalMapper regionalMapper() {
+        return Mappers.getMapper(RegionalMapper.class);
+    }
 	
 }

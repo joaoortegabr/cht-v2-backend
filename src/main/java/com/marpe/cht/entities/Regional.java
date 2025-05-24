@@ -1,14 +1,12 @@
 package com.marpe.cht.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.marpe.cht.entities.enums.Datastate;
 
 import jakarta.persistence.Entity;
@@ -30,6 +28,7 @@ public class Regional implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	private String nome;
 	private Double horasPadrao;
 	private Double valorHoraDiurna;
@@ -54,7 +53,6 @@ public class Regional implements Serializable {
 		this.valorHoraNoturna = valorHoraNoturna;
 		this.valorTransporte = valorTransporte;
 		this.descricao = descricao;
-		this.state = Datastate.ACTIVE;
 	}
 
 	public Long getId() {
@@ -93,7 +91,7 @@ public class Regional implements Serializable {
 		return valorHoraNoturna;
 	}
 
-	public void setValorHoraNoturno(Double valorHoraNoturna) {
+	public void setValorHoraNoturna(Double valorHoraNoturna) {
 		this.valorHoraNoturna = valorHoraNoturna;
 	}
 
