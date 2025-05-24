@@ -19,12 +19,14 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 	
 @Entity
-@Table(name = "tb_atividade")
+@Table(name = "tb_atividade", indexes = {
+	    @Index(name = "idx_colaborador_id", columnList = "colaborador_id")})
 @SQLDelete(sql = "UPDATE tb_atividade SET state = '0' WHERE id = ?")
 @SQLRestriction(value = "state = '1'")
 public class Atividade implements Serializable {

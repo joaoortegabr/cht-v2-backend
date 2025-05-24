@@ -21,13 +21,15 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_order")
+@Table(name = "tb_order", indexes = {
+	    @Index(name = "idx_coordenador_id", columnList = "coordenador_id")})
 @SQLDelete(sql = "UPDATE tb_order SET state = '0' WHERE id = ?")
 @SQLRestriction(value = "state = '1'")
 public class Order implements Serializable {
