@@ -8,6 +8,7 @@ import com.marpe.cht.entities.mappers.AtividadeMapper;
 import com.marpe.cht.entities.mappers.ClienteMapper;
 import com.marpe.cht.entities.mappers.DadosBancariosMapper;
 import com.marpe.cht.entities.mappers.DadosPessoaisMapper;
+import com.marpe.cht.entities.mappers.OrderMapper;
 
 @Configuration
 public class MapStructConfig {
@@ -30,6 +31,11 @@ public class MapStructConfig {
 	@Bean
     DadosPessoaisMapper dadosPessoaisMapper() {
         return Mappers.getMapper(DadosPessoaisMapper.class);
+    }
+	
+	@Bean
+    OrderMapper orderMapper() {
+        return Mappers.getMapper(OrderMapper.class);
     }
 	
 	

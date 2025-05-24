@@ -3,17 +3,13 @@ package com.marpe.cht.entities;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.marpe.cht.entities.enums.Datastate;
 
 import jakarta.persistence.Column;
@@ -31,38 +27,35 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "tb_order")
-@SQLDelete(sql = "UPDATE tb_os SET state = '0' WHERE id = ?")
+@SQLDelete(sql = "UPDATE tb_order SET state = '0' WHERE id = ?")
 @SQLRestriction(value = "state = '1'")
 public class Order implements Serializable {
 	private static final long serialVersionUID = 5626482936468572904L;
 	
 	@Id
-	@Column(name="id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "cliente_id")
+	private Cliente cliente;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "regional_id")
+	private Regional regional;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "coordenador_id")
+	private Coordenador coordenador;
 	private LocalDate dataInicio;
-	@JsonFormat(pattern = "HH:mm")
 	private LocalTime horaInicio;
 	private String observacao;
 	@Column(name = "todos_pagos", nullable = false)
 	private Boolean todosPagos;
 	@Column(name = "concluida", nullable = false)
 	private Boolean concluida;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cliente_id")
-	private Cliente cliente;
-	@ManyToOne
-	@JoinColumn(name = "regional_id")
-	private Regional regional;
-	@ManyToOne
-	@JoinColumn(name = "coordenador_id")
-	private Coordenador coordenador;
 
+	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
 	@JsonManagedReference
-	@OneToMany(mappedBy = "os", fetch = FetchType.EAGER)
-	protected Set<Atividade> oscolab;
+	private Set<Atividade> atividades;
 	
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
@@ -70,17 +63,17 @@ public class Order implements Serializable {
 	public Order() {
 	}
 
-	public Order(LocalDate dataInicio, LocalTime horaInicio, String observacao,
-			Cliente cliente, Regional regional, Coordenador coordenador) {
-		this.dataInicio = dataInicio;
-		this.horaInicio = horaInicio;
-		this.observacao = observacao;
-		this.todosPagos = false;
-		this.concluida = false;
+	public Order(Cliente cliente, Regional regional, Coordenador coordenador,
+			LocalDate dataInicio, LocalTime horaInicio, String observacao,
+			Boolean todosPagos,	Boolean concluida) {
 		this.cliente = cliente;
 		this.regional = regional;
 		this.coordenador = coordenador;
-		this.state = Datastate.ACTIVE;
+		this.dataInicio = dataInicio;
+		this.horaInicio = horaInicio;
+		this.observacao = observacao;
+		this.todosPagos = todosPagos;
+		this.concluida = concluida;
 	}
 
 	public Long getId() {
@@ -89,6 +82,30 @@ public class Order implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Regional getRegional() {
+		return regional;
+	}
+
+	public void setRegional(Regional regional) {
+		this.regional = regional;
+	}
+
+	public Coordenador getCoordenador() {
+		return coordenador;
+	}
+
+	public void setCoordenador(Coordenador coordenador) {
+		this.coordenador = coordenador;
 	}
 
 	public LocalDate getDataInicio() {
@@ -131,38 +148,6 @@ public class Order implements Serializable {
 		this.concluida = concluida;
 	}
 
-	public Cliente getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-
-	public Regional getRegional() {
-		return regional;
-	}
-
-	public void setRegional(Regional regional) {
-		this.regional = regional;
-	}
-
-	public Coordenador getCoordenador() {
-		return coordenador;
-	}
-
-	public void setCoordenador(Coordenador coordenador) {
-		this.coordenador = coordenador;
-	}
-
-	public Set<Atividade> getOscolab() {
-		return oscolab;
-	}
-
-	public void addOscolab(Atividade oscolab) {
-		this.oscolab.add(oscolab);
-	}
-	
 	public Datastate getState() {
 		return state;
 	}
@@ -170,8 +155,11 @@ public class Order implements Serializable {
 	public void setState(Datastate state) {
 		this.state = state;
 	}
-	
-	
+
+	public Set<Atividade> getAtividades() {
+		return atividades;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

@@ -31,7 +31,7 @@ public class AtividadeController {
 	private static final Logger log = LoggerFactory.getLogger(AtividadeController.class);
 	AtividadeMapper mapper = Mappers.getMapper(AtividadeMapper.class);
 
-	private AtividadeService atividadeService;
+	private final AtividadeService atividadeService;
 	
 	public AtividadeController(AtividadeService atividadeService) {
 		this.atividadeService = atividadeService;
@@ -77,6 +77,6 @@ public class AtividadeController {
 		log.info("Receiving request to delete an Atividade with param: id={}", id);
 		String msg = atividadeService.delete(id);
 		return ResponseEntity.ok(msg);
-	}	
+	}
 	
 }

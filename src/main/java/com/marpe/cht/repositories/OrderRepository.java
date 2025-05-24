@@ -8,5 +8,4 @@ import com.marpe.cht.entities.Order;
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-
 }
