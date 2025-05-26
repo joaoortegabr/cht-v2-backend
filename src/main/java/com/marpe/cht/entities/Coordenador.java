@@ -10,6 +10,7 @@ import org.hibernate.annotations.SQLRestriction;
 import com.marpe.cht.entities.enums.Datastate;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -46,6 +47,7 @@ public class Coordenador implements Serializable {
 	@OneToMany(mappedBy = "coordenador")
 	private List<Order> orders;
 	
+    @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
 	
@@ -56,6 +58,7 @@ public class Coordenador implements Serializable {
 		this.user = user;
 		this.dadosPessoais = dadosPessoais;
 		this.dadosBancarios = dadosBancarios;
+		this.state = Datastate.ACTIVE;
 	}
 
 	public Long getId() {

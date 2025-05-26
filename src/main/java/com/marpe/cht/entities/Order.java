@@ -60,6 +60,7 @@ public class Order implements Serializable {
 	@JsonManagedReference
 	private Set<Atividade> atividades;
 	
+    @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
 	
@@ -77,6 +78,7 @@ public class Order implements Serializable {
 		this.observacao = observacao;
 		this.todosPagos = todosPagos;
 		this.concluida = concluida;
+		this.state = Datastate.ACTIVE;
 	}
 
 	public Long getId() {

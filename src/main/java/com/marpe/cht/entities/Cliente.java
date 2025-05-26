@@ -36,6 +36,7 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy = "cliente")
 	private List<Order> orders;
 	
+    @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
 	
@@ -45,6 +46,7 @@ public class Cliente implements Serializable {
 	public Cliente(String nome, String cidade) {
 		this.nome = nome;
 		this.cidade = cidade;
+		this.state = Datastate.ACTIVE;
 	}
 
 	public Long getId() {

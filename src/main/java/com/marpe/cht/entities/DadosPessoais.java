@@ -41,6 +41,7 @@ public class DadosPessoais implements Serializable {
 	@Column(unique = true)
 	private String email;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
 	
@@ -54,6 +55,7 @@ public class DadosPessoais implements Serializable {
 		this.cpf = cpf;
 		this.telefone = telefone;
 		this.email = email;
+		this.state = Datastate.ACTIVE;
 	}
 
 	public Long getId() {

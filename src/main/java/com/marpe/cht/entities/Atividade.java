@@ -58,6 +58,7 @@ public class Atividade implements Serializable {
 	@Column(nullable = false)
 	protected Boolean pago;
 	
+    @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
 	
@@ -77,6 +78,7 @@ public class Atividade implements Serializable {
 		this.adicionalViagem = adicionalViagem;
 		this.totalAReceber = 0.0;
 		this.pago = pago;
+		this.state = Datastate.ACTIVE;
 	}
 
 	public Long getId() {

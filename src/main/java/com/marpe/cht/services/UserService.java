@@ -6,34 +6,73 @@ import java.util.Optional;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.marpe.cht.controllers.AuthController;
 import com.marpe.cht.entities.User;
+import com.marpe.cht.entities.dtos.AuthRequest;
+import com.marpe.cht.entities.enums.Datastate;
+import com.marpe.cht.entities.enums.Role;
 import com.marpe.cht.exceptions.DatabaseException;
 import com.marpe.cht.exceptions.ExistingUserException;
 import com.marpe.cht.repositories.UserRepository;
 import com.marpe.cht.exceptions.ResourceNotFoundException;
+import com.marpe.cht.exceptions.UnprocessableRequestException;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
+	
+	private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
-	@Autowired
-	private UserRepository repository;
+	private final UserRepository userRepository;
+	private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 	
-	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-	
-	public List<User> findAll() {
-		return repository.findAll();
+	public UserService(UserRepository userRepository) {
+		this.userRepository = userRepository;
 	}
 	
-	public User findById(Long id) {
-		Optional<User> obj = repository.findById(id);
-		return obj.orElseThrow(() -> new ResourceNotFoundException("Resource not found with id: " + id));
+	@Transactional
+	public User registerUser(AuthRequest request) {
+		log.info("Creating new user");
+
+		if(usernameAlreadyRegistered(request.getUsername()))
+			throw new UnprocessableRequestException("This username is already registered.");
+		
+	    User user = new User();
+	    user.setUsername(request.getUsername());
+	    user.setPassword(encoder.encode(request.getPassword()));
+	    user.setRole(Role.COLABORADOR);
+	    user.setState(Datastate.ACTIVE);
+	    userRepository.save(user);
+	    return user;
 	}
+	
+	private boolean usernameAlreadyRegistered(String username) {
+		return userRepository.findByUsername(username).isPresent() ? true : false;
+	}
+	
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username)
+            .orElseThrow(() -> new UsernameNotFoundException("Username " + username + "not found."));
+    }
+	
+	
+	
+//	
+//	public User findById(Long id) {
+//		Optional<User> obj = repository.findById(id);
+//		return obj.orElseThrow(() -> new ResourceNotFoundException("Resource not found with id: " + id));
+//	}
 	
 //	public User insert(User obj) {
 //		if(verifyExistingEmail(obj)) {
@@ -51,27 +90,27 @@ public class UserService {
 //		return repository.save(obj);
 //	}
 		
-	public void delete(Long id) {
-		try {
-			repository.deleteById(id);	
-		} catch(EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundException("Resource not found with id: " + id);
-		} catch(DataIntegrityViolationException e) {
-			throw new DatabaseException(e.getMessage());
-		}
-	}
-	
-	public User update(Long id, User obj) {
-		try {
-			User entity = repository.getReferenceById(id);
-			updateData(entity, obj);
-			return repository.save(entity);
-		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundException("Resource not found with id: " + id);
-		}
-	}
+//	public void delete(Long id) {
+//		try {
+//			repository.deleteById(id);	
+//		} catch(EmptyResultDataAccessException e) {
+//			throw new ResourceNotFoundException("Resource not found with id: " + id);
+//		} catch(DataIntegrityViolationException e) {
+//			throw new DatabaseException(e.getMessage());
+//		}
+//	}
+//	
+//	public User update(Long id, User obj) {
+//		try {
+//			User entity = repository.getReferenceById(id);
+//			updateData(entity, obj);
+//			return repository.save(entity);
+//		} catch (EntityNotFoundException e) {
+//			throw new ResourceNotFoundException("Resource not found with id: " + id);
+//		}
+//	}
 
-	private void updateData(User entity, User obj) {
+//	private void updateData(User entity, User obj) {
 //		entity.setPassword(encoder.encode(obj.getPassword()));
 //		entity.setNome(convertToHumanCase(obj.getNome()));
 //		entity.setRg(obj.getRg());
@@ -80,7 +119,7 @@ public class UserService {
 //		entity.setTelefone(formatarTelefone(obj.getTelefone()));
 //		entity.setAtivo(obj.getAtivo());
 //		entity.setPerfil(obj.getPerfil());
-	}
+//	}
 
 //	private Boolean verifyExistingEmail(User obj) {
 //		List<User> allUsers = findAll();

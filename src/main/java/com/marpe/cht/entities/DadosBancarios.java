@@ -8,6 +8,7 @@ import org.hibernate.annotations.SQLRestriction;
 
 import com.marpe.cht.entities.enums.Datastate;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -39,6 +40,7 @@ public class DadosBancarios implements Serializable {
 	private String operacao;
 	private String titular;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
 	
@@ -52,6 +54,7 @@ public class DadosBancarios implements Serializable {
 		this.conta = conta;
 		this.operacao = operacao;
 		this.titular = titular;
+		this.state = Datastate.ACTIVE;
 	}
 
 	public Long getId() {

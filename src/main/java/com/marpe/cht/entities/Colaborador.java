@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.marpe.cht.entities.enums.Datastate;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -48,6 +49,7 @@ public class Colaborador implements Serializable {
 	@JsonManagedReference
 	private Set<Atividade> atividades;
 	
+    @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
 	
@@ -59,6 +61,7 @@ public class Colaborador implements Serializable {
 		this.dadosPessoais = dadosPessoais;
 		this.dadosBancarios = dadosBancarios;
 		this.cidade = cidade;
+		this.state = Datastate.ACTIVE;
 	}
 
 	public Long getId() {

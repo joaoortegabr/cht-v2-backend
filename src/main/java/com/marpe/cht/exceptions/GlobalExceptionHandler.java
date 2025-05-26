@@ -29,6 +29,14 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(status).body(err);
 	}
 	
+	@ExceptionHandler(UnprocessableRequestException.class)
+	public ResponseEntity<StandardError> handleUnprocessableRequestException(UnprocessableRequestException e, HttpServletRequest request) {
+		String error  = "Unprocessable request";
+		HttpStatus status = HttpStatus.UNPROCESSABLE_ENTITY;
+		StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+		return ResponseEntity.status(status).body(err);
+	}
+	
 	@ExceptionHandler(ExistingUserException.class)
 	public ResponseEntity<StandardError> handleExistingUserException(ExistingUserException e, HttpServletRequest request) {
 		String error  = "User already registered";

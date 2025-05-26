@@ -1,14 +1,20 @@
 package com.marpe.cht.entities;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.marpe.cht.entities.enums.Datastate;
 import com.marpe.cht.entities.enums.Role;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,7 +27,7 @@ import jakarta.persistence.Table;
 @Table(name = "tb_user")
 @SQLDelete(sql = "UPDATE tb_user SET state = '0' WHERE id = ?")
 @SQLRestriction(value = "state = '1'")
-public class User implements Serializable {
+public class User implements UserDetails, Serializable {
 	private static final long serialVersionUID = -4736665210289429436L;
 	
 	@Id
@@ -30,9 +36,11 @@ public class User implements Serializable {
 	private String username;
 	private String password;
 	
-    @Enumerated(EnumType.ORDINAL)
+	@Column(nullable = false)
+    @Enumerated(EnumType.STRING)
 	private Role role;
 	
+    @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private Datastate state;
 	
@@ -43,6 +51,7 @@ public class User implements Serializable {
 		this.username = username;
 		this.password = password;
 		this.role = role;
+		this.state = Datastate.ACTIVE;
 	}
 
 	public Long getId() {
@@ -101,5 +110,15 @@ public class User implements Serializable {
 		User other = (User) obj;
 		return Objects.equals(id, other.id);
 	}
+	
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + getRole().name()));
+    }
+
+    @Override public boolean isAccountNonExpired() { return true; }
+    @Override public boolean isAccountNonLocked() { return true; }
+    @Override public boolean isCredentialsNonExpired() { return true; }
+    @Override public boolean isEnabled() { return true; }
 
 }
