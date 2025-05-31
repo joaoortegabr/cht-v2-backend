@@ -59,7 +59,7 @@ public class OrderService {
 			Order order = new Order();
 			order.setCliente(request.getCliente());
 			order.setRegional(request.getRegional());
-			order.setCoordenador(request.getCoordenador());
+			order.setColaborador(request.getColaborador());
 			order.setDataInicio(request.getDataInicio());
 			order.setHoraInicio(request.getHoraInicio());
 			order.setObservacao(request.getObservacao());
@@ -81,7 +81,7 @@ public class OrderService {
 			Order order = findById(id);
 			order.setCliente(request.getCliente());
 			order.setRegional(request.getRegional());
-			order.setCoordenador(request.getCoordenador());
+			order.setColaborador(request.getColaborador());
 			order.setDataInicio(request.getDataInicio());
 			order.setHoraInicio(request.getHoraInicio());
 			order.setObservacao(request.getObservacao());

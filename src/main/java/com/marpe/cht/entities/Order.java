@@ -46,8 +46,8 @@ public class Order implements Serializable {
 	@JoinColumn(name = "regional_id")
 	private Regional regional;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "coordenador_id")
-	private Coordenador coordenador;
+	@JoinColumn(name = "colaborador_id")
+	private Colaborador colaborador;
 	private LocalDate dataInicio;
 	private LocalTime horaInicio;
 	private String observacao;
@@ -67,12 +67,12 @@ public class Order implements Serializable {
 	public Order() {
 	}
 
-	public Order(Cliente cliente, Regional regional, Coordenador coordenador,
+	public Order(Cliente cliente, Regional regional, Colaborador colaborador,
 			LocalDate dataInicio, LocalTime horaInicio, String observacao,
 			Boolean todosPagos,	Boolean concluida) {
 		this.cliente = cliente;
 		this.regional = regional;
-		this.coordenador = coordenador;
+		this.colaborador = colaborador;
 		this.dataInicio = dataInicio;
 		this.horaInicio = horaInicio;
 		this.observacao = observacao;
@@ -105,12 +105,12 @@ public class Order implements Serializable {
 		this.regional = regional;
 	}
 
-	public Coordenador getCoordenador() {
-		return coordenador;
+	public Colaborador getColaborador() {
+		return colaborador;
 	}
 
-	public void setCoordenador(Coordenador coordenador) {
-		this.coordenador = coordenador;
+	public void setColaborador(Colaborador colaborador) {
+		this.colaborador = colaborador;
 	}
 
 	public LocalDate getDataInicio() {
