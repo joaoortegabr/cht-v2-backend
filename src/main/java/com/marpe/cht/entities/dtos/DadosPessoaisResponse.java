@@ -9,7 +9,8 @@ public record DadosPessoaisResponse(
 		String rg,
 		String cpf,
 		String telefone,
-		String email
+		String email,
+		String cidade
 		) {
 
 }

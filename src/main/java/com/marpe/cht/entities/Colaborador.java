@@ -44,7 +44,6 @@ public class Colaborador implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "dados_bancarios")
 	private DadosBancarios dadosBancarios;
-	private String cidade;
 	@OneToMany(mappedBy = "colaborador")
 	@JsonManagedReference
 	private Set<Atividade> atividades;
@@ -56,11 +55,10 @@ public class Colaborador implements Serializable {
 	public Colaborador() {
 	}
 
-	public Colaborador(User user, DadosPessoais dadosPessoais, DadosBancarios dadosBancarios, String cidade) {
+	public Colaborador(User user, DadosPessoais dadosPessoais, DadosBancarios dadosBancarios) {
 		this.user = user;
 		this.dadosPessoais = dadosPessoais;
 		this.dadosBancarios = dadosBancarios;
-		this.cidade = cidade;
 		this.state = Datastate.ACTIVE;
 	}
 
@@ -94,14 +92,6 @@ public class Colaborador implements Serializable {
 
 	public void setDadosBancarios(DadosBancarios dadosBancarios) {
 		this.dadosBancarios = dadosBancarios;
-	}
-
-	public String getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(String cidade) {
-		this.cidade = cidade;
 	}
 	
 	public Set<Atividade> getAtividades() {

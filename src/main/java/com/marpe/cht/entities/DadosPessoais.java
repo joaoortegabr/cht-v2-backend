@@ -40,6 +40,7 @@ public class DadosPessoais implements Serializable {
 	private String telefone;
 	@Column(unique = true)
 	private String email;
+	private String cidade;
 
     @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
@@ -48,13 +49,14 @@ public class DadosPessoais implements Serializable {
 	public DadosPessoais() {
 	}
 
-	public DadosPessoais(User user, String nome, String rg, String cpf, String telefone, String email) {
+	public DadosPessoais(User user, String nome, String rg, String cpf, String telefone, String email, String cidade) {
 		this.user = user;
 		this.nome = nome;
 		this.rg = rg;
 		this.cpf = cpf;
 		this.telefone = telefone;
 		this.email = email;
+		this.cidade = cidade;
 		this.state = Datastate.ACTIVE;
 	}
 
@@ -112,6 +114,14 @@ public class DadosPessoais implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
 	}
 
 	public Datastate getState() {

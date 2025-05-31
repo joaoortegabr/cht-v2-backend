@@ -57,7 +57,6 @@ public class ColaboradorService {
 			colaborador.setUser(request.getUser());
 			colaborador.setDadosPessoais(request.getDadosPessoais());
 			colaborador.setDadosBancarios(request.getDadosBancarios());
-			colaborador.setCidade(request.getCidade());
 			colaborador.setState(Datastate.ACTIVE);
 	        return colaboradorRepository.save(colaborador);
 		} catch(ConstraintViolationException e) {
@@ -75,7 +74,6 @@ public class ColaboradorService {
 			colaborador.setUser(request.getUser());
 			colaborador.setDadosPessoais(request.getDadosPessoais());
 			colaborador.setDadosBancarios(request.getDadosBancarios());
-			colaborador.setCidade(request.getCidade());
 			return colaboradorRepository.save(colaborador);
 		} catch(ConstraintViolationException e) {
 			throw new ConstraintViolationException("Error validating Colaborador input data: {}", e.getConstraintViolations());

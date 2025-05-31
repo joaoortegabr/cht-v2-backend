@@ -8,7 +8,8 @@ public record DadosPessoaisRequest(
 		String rg,
 		String cpf,
 		String telefone,
-		String email
+		String email,
+		String cidade
 		) {
 
 }

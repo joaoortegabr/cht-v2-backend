@@ -9,8 +9,13 @@ import javax.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.marpe.cht.controllers.AuthController;
+import com.marpe.cht.entities.Order;
 import com.marpe.cht.entities.User;
 import com.marpe.cht.entities.dtos.AuthRequest;
 import com.marpe.cht.entities.enums.Datastate;
@@ -26,6 +32,10 @@ import com.marpe.cht.entities.enums.Role;
 import com.marpe.cht.exceptions.DatabaseException;
 import com.marpe.cht.exceptions.ExistingUserException;
 import com.marpe.cht.repositories.UserRepository;
+import com.marpe.cht.utils.PaginationRequest;
+
+import jakarta.validation.ConstraintViolationException;
+
 import com.marpe.cht.exceptions.ResourceNotFoundException;
 import com.marpe.cht.exceptions.UnprocessableRequestException;
 
@@ -41,9 +51,67 @@ public class UserService implements UserDetailsService {
 		this.userRepository = userRepository;
 	}
 	
+	@Cacheable("users")
+	public Page<User> findAll(PaginationRequest paginationRequest) {
+		log.info("Executing service to findAll Users");
+		PageRequest pageRequest = PageRequest.of(
+            paginationRequest.getPage(),
+            paginationRequest.getSize(),
+            Sort.by(Sort.Direction.DESC, paginationRequest.getSortField()));
+		Page<User> userPage = userRepository.findAll(pageRequest);
+        return new PageImpl<User>(userPage.getContent(), userPage.getPageable(), userPage.getTotalElements());
+	}
+	
+	public User findById(Long id) {
+		log.info("Executing service to findById an User with param: id={}", id); 
+		return userRepository.findById(id)
+			.orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
+	}
+    
+    @Transactional
+	public User changePassword(Long id, User request) {
+		log.info("Executing service to change password of User with params: id={} and user={}", id, request);
+		try {
+			User user = findById(id);
+			user.setPassword(encoder.encode(request.getPassword()));
+			return userRepository.save(user);
+		} catch(ConstraintViolationException e) {
+			throw new ConstraintViolationException("Error validating User input data: {}", e.getConstraintViolations());
+		} catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityViolationException("Error updating User input data in database: " + e.getMessage());
+		}
+	}
+
+    @Transactional
+	public User changeRole(Long id, User request) {
+		log.info("Executing service to change role of User with params: id={} and user={}", id, request);
+		try {
+			User user = findById(id);
+			user.setRole(request.getRole());
+			return userRepository.save(user);
+		} catch(ConstraintViolationException e) {
+			throw new ConstraintViolationException("Error validating User input data: {}", e.getConstraintViolations());
+		} catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityViolationException("Error updating User input data in database: " + e.getMessage());
+		}
+	}
+    
+	@Transactional
+	public String delete(Long id) {
+		log.info("Executing service to delete an User with param: id={}", id);
+		try {
+			userRepository.deleteById(id);
+			return "Registro removido com sucesso.";
+		} catch(EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException("User not found with id: " + id);
+		} catch(DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}
+	}
+	
 	@Transactional
 	public User registerUser(AuthRequest request) {
-		log.info("Creating new user");
+		log.info("Creating new user: " + request.getUsername());
 
 		if(usernameAlreadyRegistered(request.getUsername()))
 			throw new UnprocessableRequestException("This username is already registered.");
@@ -66,13 +134,7 @@ public class UserService implements UserDetailsService {
             .orElseThrow(() -> new UsernameNotFoundException("Username " + username + "not found."));
     }
 	
-	
-	
-//	
-//	public User findById(Long id) {
-//		Optional<User> obj = repository.findById(id);
-//		return obj.orElseThrow(() -> new ResourceNotFoundException("Resource not found with id: " + id));
-//	}
+
 	
 //	public User insert(User obj) {
 //		if(verifyExistingEmail(obj)) {
@@ -90,25 +152,7 @@ public class UserService implements UserDetailsService {
 //		return repository.save(obj);
 //	}
 		
-//	public void delete(Long id) {
-//		try {
-//			repository.deleteById(id);	
-//		} catch(EmptyResultDataAccessException e) {
-//			throw new ResourceNotFoundException("Resource not found with id: " + id);
-//		} catch(DataIntegrityViolationException e) {
-//			throw new DatabaseException(e.getMessage());
-//		}
-//	}
-//	
-//	public User update(Long id, User obj) {
-//		try {
-//			User entity = repository.getReferenceById(id);
-//			updateData(entity, obj);
-//			return repository.save(entity);
-//		} catch (EntityNotFoundException e) {
-//			throw new ResourceNotFoundException("Resource not found with id: " + id);
-//		}
-//	}
+
 
 //	private void updateData(User entity, User obj) {
 //		entity.setPassword(encoder.encode(obj.getPassword()));

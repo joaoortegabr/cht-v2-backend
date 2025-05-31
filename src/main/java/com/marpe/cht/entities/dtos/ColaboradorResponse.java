@@ -8,8 +8,7 @@ public record ColaboradorResponse(
 		Long id,
 		User user,
 		DadosPessoais dadosPessoais,
-		DadosBancarios dadosBancarios,
-		String cidade
+		DadosBancarios dadosBancarios
 		) {
 
 }

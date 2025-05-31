@@ -7,8 +7,7 @@ import com.marpe.cht.entities.User;
 public record ColaboradorRequest(
 		User user,
 		DadosPessoais dadosPessoais,
-		DadosBancarios dadosBancarios,
-		String cidade
+		DadosBancarios dadosBancarios
 		) {
 
 }

@@ -1,50 +1,76 @@
 package com.marpe.cht.controllers;
 
-import java.util.Optional;
-
-import org.springframework.http.HttpStatus;
+import org.mapstruct.factory.Mappers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.marpe.cht.entities.User;
-import com.marpe.cht.repositories.UserRepository;
+import com.marpe.cht.entities.dtos.UserRequest;
+import com.marpe.cht.entities.dtos.UserResponse;
+import com.marpe.cht.entities.mappers.UserMapper;
 import com.marpe.cht.services.UserService;
+import com.marpe.cht.utils.PaginationRequest;
 
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
 
-	private final UserService userService;
-	private final UserRepository userRepository;
-	BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+	private static final Logger log = LoggerFactory.getLogger(UserController.class);
+	UserMapper mapper = Mappers.getMapper(UserMapper.class);
 	
-	public UserController(UserService userService, UserRepository userRepository) {
+	private final UserService userService;
+	
+	public UserController(UserService userService) {
 		this.userService = userService;
-		this.userRepository = userRepository;
 	}
 
-	@PostMapping(value = "/login")
-	public ResponseEntity<Optional<User>> validateUser(@RequestBody ObjectNode JSONObject) {
-		String username = JSONObject.get("username").asText();
-        String password = JSONObject.get("password").asText();
-  
-		Optional<User> optUser = userRepository.findByUsername(username);
-		if(optUser.isEmpty()) {
-			  return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-		}
-		  
-		boolean valid = encoder.matches(password, optUser.get().getPassword());
-		if(valid) {
-			HttpStatus status = HttpStatus.OK;
-			return ResponseEntity.status(status).body(optUser);
-		} else {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-		}
+	@GetMapping
+	public ResponseEntity<Page<UserResponse>> findAll(PaginationRequest paginationRequest) {
+		log.info("Receiving request to findAll Users");
+		Page<User> userPage = userService.findAll(paginationRequest);
+		Page<UserResponse> userResponsePage = userPage.map(mapper::toUserResponse);
+	    return ResponseEntity.ok(userResponsePage);
+	}
+	
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<UserResponse> findById(@PathVariable Long id) {
+		log.info("Receiving request to findById an User with param: id={}", id);
+		UserResponse user = mapper.toUserResponse(userService.findById(id));
+		return ResponseEntity.ok().body(user);
+	}
+	
+	@PutMapping(value = "/password/{id}")
+	public ResponseEntity<UserResponse> changePassword(@PathVariable Long id, @RequestBody UserRequest request) {
+		log.info("Receiving request to change password of User with params: id={} and user={}", id, request);
+		User user = mapper.toUser(request);
+		User updatedUser = userService.changePassword(id, user);
+		UserResponse userResponse = mapper.toUserResponse(updatedUser);
+		return ResponseEntity.ok().body(userResponse);
+	}	
+	
+	@PutMapping(value = "/role/{id}")
+	public ResponseEntity<UserResponse> changeRole(@PathVariable Long id, @RequestBody UserRequest request) {
+		log.info("Receiving request to change role of User with params: id={} and user={}", id, request);
+		User user = mapper.toUser(request);
+		User updatedUser = userService.changeRole(id, user);
+		UserResponse userResponse = mapper.toUserResponse(updatedUser);
+		return ResponseEntity.ok().body(userResponse);
+	}	
+	
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<String> delete(@PathVariable Long id) {
+		log.info("Receiving request to delete an User with param: id={}", id);
+		String msg = userService.delete(id);
+		return ResponseEntity.ok(msg);
 	}
 	 
 }

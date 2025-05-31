@@ -45,6 +45,7 @@ public class DadosPessoaisService {
 			dadosPessoais.setCpf(request.getCpf());
 			dadosPessoais.setTelefone(request.getTelefone());
 			dadosPessoais.setEmail(request.getEmail());
+			dadosPessoais.setCidade(request.getCidade());
 			dadosPessoais.setState(Datastate.ACTIVE);
 	        return dadosPessoaisRepository.save(dadosPessoais);
 		} catch(ConstraintViolationException e) {
@@ -64,6 +65,7 @@ public class DadosPessoaisService {
 			dadosPessoais.setCpf(request.getCpf());
 			dadosPessoais.setTelefone(request.getTelefone());
 			dadosPessoais.setEmail(request.getEmail());
+			dadosPessoais.setCidade(request.getCidade());
 			return dadosPessoaisRepository.save(dadosPessoais);
 		} catch(ConstraintViolationException e) {
 			throw new ConstraintViolationException("Error validating DadosPessoais input data: {}", e.getConstraintViolations());
