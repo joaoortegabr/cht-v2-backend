@@ -42,7 +42,6 @@ public class Atividade implements Serializable {
 	private Order order;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "colaborador_id")
-	@JsonBackReference
 	private Colaborador colaborador;
 	@JsonFormat(pattern = "HH:mm")
 	protected LocalTime horaInicial;

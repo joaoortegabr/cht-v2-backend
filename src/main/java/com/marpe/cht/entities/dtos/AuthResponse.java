@@ -25,5 +25,5 @@ public class AuthResponse {
 	public Role getRole() {
 		return role;
 	}
-    
+
 }

@@ -11,13 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.marpe.cht.entities.Colaborador;
-import com.marpe.cht.entities.Coordenador;
 import com.marpe.cht.entities.Order;
 import com.marpe.cht.entities.Atividade;
 import com.marpe.cht.exceptions.InvalidRequestException;
 import com.marpe.cht.export.helper.ExcelHelper;
 import com.marpe.cht.repositories.ColaboradorRepository;
-import com.marpe.cht.repositories.CoordenadorRepository;
 import com.marpe.cht.repositories.AtividadeRepository;
 import com.marpe.cht.repositories.OrderRepository;
 import com.marpe.cht.repositories.ReportRepository;
@@ -33,9 +31,6 @@ public class ExcelService {
   ColaboradorRepository colaboradoresRepository;
   
   @Autowired
-  CoordenadorRepository coordenadorRepository;
-  
-  @Autowired
   OrderRepository osRepository;
   
   @Autowired
@@ -46,12 +41,12 @@ public class ExcelService {
   
   DateTimeFormatter dtfmt = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
-  public ByteArrayInputStream listCoordenadores() {
-	    List<Coordenador> coordenadores = coordenadorRepository.findAll();
-
-	    ByteArrayInputStream in = ExcelHelper.coordenadoresToExcel(coordenadores);
-	    return in;
-	  }
+//  public ByteArrayInputStream listCoordenadores() {
+//	    List<Coordenador> coordenadores = coordenadorRepository.findAll();
+//
+//	    ByteArrayInputStream in = ExcelHelper.coordenadoresToExcel(coordenadores);
+//	    return in;
+//	  }
   
   public ByteArrayInputStream listColaboradores() {
 	    List<Colaborador> colaboradores = colaboradoresRepository.findAll();

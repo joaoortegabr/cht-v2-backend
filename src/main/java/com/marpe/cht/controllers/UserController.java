@@ -4,6 +4,7 @@ import org.mapstruct.factory.Mappers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.marpe.cht.entities.User;
+import com.marpe.cht.entities.dtos.UserPasswordRequest;
 import com.marpe.cht.entities.dtos.UserRequest;
 import com.marpe.cht.entities.dtos.UserResponse;
 import com.marpe.cht.entities.mappers.UserMapper;
@@ -48,13 +50,11 @@ public class UserController {
 		return ResponseEntity.ok().body(user);
 	}
 	
-	@PutMapping(value = "/password/{id}")
-	public ResponseEntity<UserResponse> changePassword(@PathVariable Long id, @RequestBody UserRequest request) {
+	@PutMapping(value = "/password/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
+	public ResponseEntity<String> changePassword(@PathVariable Long id, @RequestBody UserPasswordRequest request) {
 		log.info("Receiving request to change password of User with params: id={} and user={}", id, request);
-		User user = mapper.toUser(request);
-		User updatedUser = userService.changePassword(id, user);
-		UserResponse userResponse = mapper.toUserResponse(updatedUser);
-		return ResponseEntity.ok().body(userResponse);
+		String result = userService.changePassword(id, request);
+		return ResponseEntity.ok().body(result);
 	}	
 	
 	@PutMapping(value = "/role/{id}")

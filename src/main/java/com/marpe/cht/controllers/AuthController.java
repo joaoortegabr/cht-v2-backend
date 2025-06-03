@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.marpe.cht.entities.User;
 import com.marpe.cht.entities.dtos.AuthRequest;
 import com.marpe.cht.entities.dtos.AuthResponse;
+import com.marpe.cht.entities.dtos.LoginResponse;
 import com.marpe.cht.jwt.JwtService;
 import com.marpe.cht.services.UserService;
 
@@ -50,7 +51,7 @@ public class AuthController {
 	  }
     
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<LoginResponse> login(@RequestBody AuthRequest authRequest) {
 		log.info("Starting authentication process.");
 		
 		Authentication auth = new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword());
@@ -61,7 +62,7 @@ public class AuthController {
         User user = (User) authenticated.getPrincipal();
         String token = jwtService.generateToken(user.getUsername(), user.getRole());
 
-        return ResponseEntity.ok(new AuthResponse(token, user.getUsername(), user.getRole()));
+        return ResponseEntity.ok(new LoginResponse(user.getId(), token, user.getUsername(), user.getRole()));
     }
 
 }

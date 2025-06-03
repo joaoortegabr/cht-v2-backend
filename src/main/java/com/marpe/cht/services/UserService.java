@@ -27,6 +27,7 @@ import com.marpe.cht.controllers.AuthController;
 import com.marpe.cht.entities.Order;
 import com.marpe.cht.entities.User;
 import com.marpe.cht.entities.dtos.AuthRequest;
+import com.marpe.cht.entities.dtos.UserPasswordRequest;
 import com.marpe.cht.entities.enums.Datastate;
 import com.marpe.cht.entities.enums.Role;
 import com.marpe.cht.exceptions.DatabaseException;
@@ -46,6 +47,7 @@ public class UserService implements UserDetailsService {
 
 	private final UserRepository userRepository;
 	private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+	private BCryptPasswordEncoder decoder = new BCryptPasswordEncoder();
 	
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
@@ -69,12 +71,15 @@ public class UserService implements UserDetailsService {
 	}
     
     @Transactional
-	public User changePassword(Long id, User request) {
+	public String changePassword(Long id, UserPasswordRequest request) {
 		log.info("Executing service to change password of User with params: id={} and user={}", id, request);
 		try {
 			User user = findById(id);
-			user.setPassword(encoder.encode(request.getPassword()));
-			return userRepository.save(user);
+			if(!encoder.matches(request.currentPassword(), user.getPassword()))
+				throw new UnprocessableRequestException("Current password is incorrect.");
+			user.setPassword(encoder.encode(request.newPassword()));
+			userRepository.save(user);
+			return "Password updated successfully.";
 		} catch(ConstraintViolationException e) {
 			throw new ConstraintViolationException("Error validating User input data: {}", e.getConstraintViolations());
 		} catch(DataIntegrityViolationException e) {

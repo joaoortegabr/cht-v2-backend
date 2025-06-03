@@ -16,7 +16,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.marpe.cht.entities.Colaborador;
-import com.marpe.cht.entities.Coordenador;
 import com.marpe.cht.entities.Order;
 import com.marpe.cht.entities.Atividade;
 import com.marpe.cht.repositories.ColaboradorRepository;
@@ -30,26 +29,26 @@ public class ExcelHelper {
 	  
 	  public static String TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
 
-	  public static ByteArrayInputStream coordenadoresToExcel(List<Coordenador> coordenadores) {
-	
-		String[] HEADERs = { "Id", "Nome", "CPF", "RG", "Email", "Telefone", "Regional", "Perfil", "Ativo" };
-		String SHEET = "Coordenadores";
-		  
-	    try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
-	      Sheet sheet = workbook.createSheet(SHEET);
-	
-	      // Header
-	      Row headerRow = sheet.createRow(0);
-	
-	      for (int col = 0; col < HEADERs.length; col++) {
-	        Cell cell = headerRow.createCell(col);
-	        cell.setCellValue(HEADERs[col]);
-	      }
-	
-	      int rowIdx = 1;
-	      for (Coordenador coordenador : coordenadores) {
-	        Row row = sheet.createRow(rowIdx++);
-	
+//	  public static ByteArrayInputStream coordenadoresToExcel(List<Coordenador> coordenadores) {
+//	
+//		String[] HEADERs = { "Id", "Nome", "CPF", "RG", "Email", "Telefone", "Regional", "Perfil", "Ativo" };
+//		String SHEET = "Coordenadores";
+//		  
+//	    try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream();) {
+//	      Sheet sheet = workbook.createSheet(SHEET);
+//	
+//	      // Header
+//	      Row headerRow = sheet.createRow(0);
+//	
+//	      for (int col = 0; col < HEADERs.length; col++) {
+//	        Cell cell = headerRow.createCell(col);
+//	        cell.setCellValue(HEADERs[col]);
+//	      }
+//	
+//	      int rowIdx = 1;
+//	      for (Coordenador coordenador : coordenadores) {
+//	        Row row = sheet.createRow(rowIdx++);
+//	
 //	        row.createCell(0).setCellValue(coordenador.getId());
 //	        row.createCell(1).setCellValue(coordenador.getUser().getNome());
 //	        row.createCell(2).setCellValue(coordenador.getUser().getCpf());
@@ -59,14 +58,14 @@ public class ExcelHelper {
 //	        row.createCell(6).setCellValue(coordenador.getRegional().getNome());
 //	        row.createCell(7).setCellValue(coordenador.getUser().getPerfil().toString());
 //	        row.createCell(8).setCellValue(coordenador.getUser().getAtivo());
-	      }
-	
-	      workbook.write(out);
-	      return new ByteArrayInputStream(out.toByteArray());
-	    } catch (IOException e) {
-	      throw new RuntimeException("Failed to import data to Excel file: " + e.getMessage());
-	    }
-	  }
+//	      }
+//	
+//	      workbook.write(out);
+//	      return new ByteArrayInputStream(out.toByteArray());
+//	    } catch (IOException e) {
+//	      throw new RuntimeException("Failed to import data to Excel file: " + e.getMessage());
+//	    }
+//	  }
 	  
 	  
 	  public static ByteArrayInputStream colaboradoresToExcel(List<Colaborador> colaboradores) {

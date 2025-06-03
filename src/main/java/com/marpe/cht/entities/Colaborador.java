@@ -44,9 +44,6 @@ public class Colaborador implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "dados_bancarios")
 	private DadosBancarios dadosBancarios;
-	@OneToMany(mappedBy = "colaborador")
-	@JsonManagedReference
-	private Set<Atividade> atividades;
 	
     @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
@@ -94,10 +91,6 @@ public class Colaborador implements Serializable {
 		this.dadosBancarios = dadosBancarios;
 	}
 	
-	public Set<Atividade> getAtividades() {
-		return atividades;
-	}
-
 	public Datastate getState() {
 		return state;
 	}
