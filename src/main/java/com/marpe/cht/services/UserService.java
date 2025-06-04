@@ -1,14 +1,8 @@
 
 package com.marpe.cht.services;
 
-import java.util.List;
-import java.util.Optional;
-
-import javax.persistence.EntityNotFoundException;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -23,22 +17,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.marpe.cht.controllers.AuthController;
-import com.marpe.cht.entities.Order;
 import com.marpe.cht.entities.User;
 import com.marpe.cht.entities.dtos.AuthRequest;
 import com.marpe.cht.entities.dtos.UserPasswordRequest;
 import com.marpe.cht.entities.enums.Datastate;
 import com.marpe.cht.entities.enums.Role;
 import com.marpe.cht.exceptions.DatabaseException;
-import com.marpe.cht.exceptions.ExistingUserException;
+import com.marpe.cht.exceptions.ResourceNotFoundException;
+import com.marpe.cht.exceptions.UnprocessableRequestException;
 import com.marpe.cht.repositories.UserRepository;
 import com.marpe.cht.utils.PaginationRequest;
 
 import jakarta.validation.ConstraintViolationException;
-
-import com.marpe.cht.exceptions.ResourceNotFoundException;
-import com.marpe.cht.exceptions.UnprocessableRequestException;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -47,7 +37,6 @@ public class UserService implements UserDetailsService {
 
 	private final UserRepository userRepository;
 	private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-	private BCryptPasswordEncoder decoder = new BCryptPasswordEncoder();
 	
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
@@ -72,7 +61,7 @@ public class UserService implements UserDetailsService {
     
     @Transactional
 	public String changePassword(Long id, UserPasswordRequest request) {
-		log.info("Executing service to change password of User with params: id={} and user={}", id, request);
+		log.info("Executing service to change password of User with param: id={}", id);
 		try {
 			User user = findById(id);
 			if(!encoder.matches(request.currentPassword(), user.getPassword()))

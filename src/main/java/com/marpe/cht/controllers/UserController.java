@@ -52,7 +52,7 @@ public class UserController {
 	
 	@PutMapping(value = "/password/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
 	public ResponseEntity<String> changePassword(@PathVariable Long id, @RequestBody UserPasswordRequest request) {
-		log.info("Receiving request to change password of User with params: id={} and user={}", id, request);
+		log.info("Receiving request to change password of User with param: id={}", id);
 		String result = userService.changePassword(id, request);
 		return ResponseEntity.ok().body(result);
 	}	
